@@ -45,3 +45,6 @@ Local setup: copy `.env.example` to `.env.local`, replace the placeholder with y
 Vercel: set `OPENAI_API_KEY` in Project Settings → Environment Variables (Production and Preview as appropriate), optionally `OPENAI_MODEL`, and redeploy. Deploy the entire project including the root `api/` directory, `chat-handler.mjs`, and `public/` directory. Do not put `.env.local` or any secret in `public/`.
 
 The AI answers general product questions, but the catalog is fictional and the model cannot verify live stock, exact sizing, or shipping policies. API usage incurs charges.
+
+## Unified live storefront
+The **Live storefront** section now embeds the exact same `maren-store.html` that **Preview storefront** opens. The storefront owns its own personalization and AI chat controls; the previous separate Forma storefront has been replaced to avoid inconsistent experiences. The AI chat continues to use `/api/chat` and `OPENAI_API_KEY` server-side.
