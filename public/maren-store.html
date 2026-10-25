@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maren &amp; Co — Considered goods</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#faf9f6; --card:#ffffff; --ink:#1c1b17; --mut:#6e6a61; --soft:#a39e93;
+  --line:#e8e4da; --line2:#d8d3c6;
+  --jade:#117a5c; --jade-bg:#e9f4ef; --jade-line:#9fd4bf;
+  --bar:#15140f;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg); color:var(--ink); font-family:'Karla',system-ui,sans-serif; font-size:15px; line-height:1.6; -webkit-font-smoothing:antialiased; padding-bottom:96px}
+a{color:inherit; text-decoration:none}
+button{font-family:'Karla'; cursor:pointer}
+img{display:block}
+.wrap{max-width:1080px; margin:0 auto; padding:0 22px}
+
+/* announcement + header */
+#announce{background:var(--ink); color:#f4f2ec; font-size:12.5px; letter-spacing:.04em; text-align:center; padding:8px 14px; transition:background .4s}
+body[data-sap="on"] #announce{background:#123d2f}
+header{border-bottom:1px solid var(--line); background:var(--bg); position:sticky; top:0; z-index:20}
+.hrow{display:flex; align-items:center; justify-content:space-between; padding:16px 0}
+.logo{font-family:'Fraunces',serif; font-size:22px; font-weight:600; letter-spacing:.01em}
+nav{display:flex; gap:26px; font-size:13.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--mut)}
+nav a:hover{color:var(--ink)}
+nav a.cur{color:var(--ink); border-bottom:1.5px solid var(--ink); padding-bottom:2px}
+.cartbtn{display:flex; align-items:center; gap:8px; font-size:13.5px; border:1px solid var(--line2); background:var(--card); padding:8px 16px; border-radius:30px}
+.cartbtn b{font-weight:600}
+
+/* hero */
+.hero{display:grid; grid-template-columns:1.05fr .95fr; min-height:340px; border-bottom:1px solid var(--line)}
+.hero .ht{display:flex; flex-direction:column; justify-content:center; padding:48px 40px 48px 0}
+.hero .eyebrow{font-size:11.5px; letter-spacing:.22em; text-transform:uppercase; color:var(--mut); margin-bottom:14px}
+.hero h1{font-family:'Fraunces',serif; font-weight:500; font-size:clamp(30px,4.6vw,46px); line-height:1.1; margin-bottom:12px}
+.hero p{color:var(--mut); max-width:420px; margin-bottom:26px}
+.cta{display:inline-block; width:fit-content; background:var(--ink); color:#f4f2ec; padding:13px 28px; border-radius:32px; font-size:14px; font-weight:500; letter-spacing:.02em; border:none; transition:transform .15s}
+.cta:hover{transform:translateY(-1px)}
+.hero .hart{position:relative; overflow:hidden}
+.hero .hart .fill{position:absolute; inset:0; transition:opacity .6s}
+
+/* sections */
+.sect{padding:44px 0 8px}
+.shead{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:20px}
+.shead h2{font-family:'Fraunces',serif; font-weight:500; font-size:24px}
+.shead a{font-size:13px; color:var(--mut); letter-spacing:.04em}
+.shead a:hover{color:var(--ink)}
+
+/* product grid */
+.pgrid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; padding-bottom:40px}
+.pcard{background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden; transition:transform .25s, box-shadow .25s; position:relative; animation:tilein .5s both}
+.pcard:hover{transform:translateY(-3px); box-shadow:0 10px 26px rgba(28,27,23,.07)}
+@keyframes tilein{from{opacity:0; transform:translateY(10px)} to{opacity:1}}
+.pimgbox{height:170px; position:relative; overflow:hidden}
+.pimgbox .fill{position:absolute; inset:0}
+.ptx{padding:12px 14px 14px}
+.ptx .nm{font-size:14px; font-weight:600}
+.ptx .shot{font-size:11.5px; color:var(--soft); margin-top:1px}
+.ptx .pr{font-size:13.5px; color:var(--mut); margin-top:5px}
+.bnew{position:absolute; top:10px; right:10px; font-size:10px; letter-spacing:.1em; text-transform:uppercase; background:var(--ink); color:#f4f2ec; padding:4px 9px; border-radius:14px}
+
+/* collection page */
+.collhead{padding:42px 0 6px}
+.collhead .eyebrow{font-size:11.5px; letter-spacing:.22em; text-transform:uppercase; color:var(--mut); margin-bottom:10px}
+.collhead h1{font-family:'Fraunces',serif; font-weight:500; font-size:34px; margin-bottom:8px}
+.collhead p{color:var(--mut); max-width:520px}
+
+/* PDP */
+.pdp{display:grid; grid-template-columns:1.05fr .95fr; gap:38px; padding:42px 0 50px}
+.gal .main{height:380px; border-radius:16px; position:relative; overflow:hidden; border:1px solid var(--line)}
+.gal .main .fill{position:absolute; inset:0}
+.gal .main .shotlbl{position:absolute; left:12px; bottom:12px; font-size:11px; letter-spacing:.1em; text-transform:uppercase; background:rgba(250,249,246,.92); color:var(--ink); padding:5px 11px; border-radius:18px; font-weight:600}
+.thumbs{display:flex; gap:10px; margin-top:12px}
+.thumb{width:64px; height:64px; border-radius:10px; overflow:hidden; border:1.5px solid var(--line2); position:relative; cursor:pointer; background:none; padding:0}
+.thumb .fill{position:absolute; inset:0}
+.thumb.cur{border-color:var(--ink)}
+.binfo .bc{font-size:12px; color:var(--soft); margin-bottom:14px}
+.binfo h1{font-family:'Fraunces',serif; font-weight:500; font-size:32px; line-height:1.15}
+.binfo .pr{font-size:19px; margin:8px 0 4px}
+.rating{font-size:13px; color:#b5862c; letter-spacing:2px; margin-bottom:16px}
+.rating span{color:var(--soft); letter-spacing:0; margin-left:8px}
+.pcopy{color:var(--mut); margin-bottom:20px; max-width:440px}
+body[data-sap="on"] .pcopy{color:var(--ink)}
+.szlab{font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--mut); margin-bottom:8px}
+.sizes{display:flex; gap:8px; margin-bottom:20px}
+.sz{width:46px; height:38px; border-radius:9px; border:1px solid var(--line2); background:var(--card); font-size:13px; color:var(--mut)}
+.sz.on{border-color:var(--ink); color:var(--ink); font-weight:600}
+.add{width:100%; max-width:380px; padding:15px; border-radius:12px; border:none; background:var(--ink); color:#f4f2ec; font-size:14.5px; font-weight:600; letter-spacing:.02em}
+.add:active{transform:scale(.99)}
+.fitnote{font-size:12.5px; color:var(--jade); margin-top:10px; display:none}
+body[data-sap="on"] .fitnote{display:block}
+
+.reviews{margin-top:30px; border-top:1px solid var(--line); padding-top:20px; max-width:440px}
+.reviews h3{font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--mut); margin-bottom:12px}
+.rev{padding:12px 0; border-bottom:1px solid var(--line); animation:tilein .4s both}
+.rev .rs{font-size:11px; color:#b5862c; letter-spacing:2px}
+.rev p{font-size:13.5px; color:var(--mut); margin-top:4px}
+.rev .who{font-size:12px; color:var(--soft); margin-top:4px}
+
+.xsell{margin-top:26px; max-width:440px}
+.xsell h3{font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--mut); margin-bottom:12px}
+.xrow{display:flex; gap:14px; align-items:center; background:var(--card); border:1px solid var(--line); border-radius:13px; padding:12px; transition:transform .2s}
+.xrow:hover{transform:translateY(-2px)}
+.xrow .xi{width:62px; height:62px; border-radius:10px; overflow:hidden; position:relative; flex-shrink:0}
+.xrow .xi .fill{position:absolute; inset:0}
+.xrow .xn{font-size:14px; font-weight:600}
+.xrow .xs{font-size:12px; color:var(--mut)}
+.xrow .xp{margin-left:auto; font-size:14px; color:var(--mut)}
+
+/* product imagery — Unsplash photos (free Unsplash license, hotlinked) layered over
+   embedded SVG illustrations as offline/404 fallback. Swap any URL below to rebrand.
+   linen: Robert Richman — shirt on wall
+   linen-close: same, zoom crop
+   linen-model: Oriol Hausmann — worn shirt
+   knit: Mediamodifier — sweater product
+   knit-close: knit texture macro
+   trouser: tian dayong — pants flat-lay
+   trouser-drape: same, zoom crop
+   tote: Brando — tote product
+   tote-flat: Mediamodifier — tote carried
+   shoe: Martin Katler — gray runners
+   shoe-action: trail running scene
+   rain: rain jacket
+   rain-worn: same, zoom crop
+   pack: backpack product
+   pack-out: hiker with pack, mountains
+   sock: wool socks
+   sock-trail: wool socks, outdoors
+*/
+.sw-linen{background-image:url("https://images.unsplash.com/photo-1740711152088-88a009e877bb?auto=format&fit=crop&w=900&q=70"),url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 600 440%22%3E%3Crect width=%22600%22 height=%22440%22 fill=%22%23f1ede4%22/%3E%3Cellipse cx=%22300%22 cy=%22392%22 rx=%22150%22 ry=%2213%22 fill=%22rgba(40,35,25,0.10)%22/%3E%3Cg transform=%22translate(0,0)%22%3E%0A  %3Cpath d=%22M212,150 L160,168 L154,308 L206,296 Z%22 fill=%22%23d9d2c0%22 stroke=%22%23c2bba8%22 stroke-width=%222%22/%3E%0A  %3Cpath d=%22M388,150 L440,168 L446,308 L394,296 Z%22 fill=%22%23d9d2c0%22 stroke=%22%23c2bba8%22 stroke-width=%222%22/%3E%0A  %3Cpath d=%22M212,144 L388,144 L398,370 L202,370 Z%22 fill=%22%23d9d2c0%22 stroke=%22%23c2bba8%22 stroke-width=%222%22/%3E%0A  %3Cpath d=%22M212,144 L300,144 L300,178 L258,160 Z%22 fill=%22%23e7e0cf%22 stroke=%22%23c2bba8%22 stroke-width=%222%22/%3E%0A  %3Cpath d=%22M388,144 L300,144 L300,178 L342,160 Z%22 fill=%22%23e7e0cf%22 stroke=%22%23c2bba8%22 stroke-width=%222%22/%3E%0A  %3Cline x1=%22300%22 y1=%22178%22 x2=%22300%22 y2=%22368%22 stroke=%22%23c2bba8%22 stroke-width=%222%22/%3E%0A  %3Ccircle cx=%22300%22 cy=%22200%22 r=%223.4%22 fill=%22%23c2bba8%22/%3E%3Ccircle cx=%22300%22 cy=%22238%22 r=%223.4%22 fill=%22%23c2bba8%22/%3E%3Ccircle cx=%22300%22 cy=%22276%22 r=%223.4%22 fill=%22%23c2bba8%22/%3E%3Ccircle cx=%22300%22 cy=%22314%22 r=%223.4%22 fill=%22%23c2bba8%22/%3E%3Ccircle cx=%22300%22 cy=%22352%22 r=%223.4%22 fill=%22%23c2bba8%22/%3E%0A  %3Crect x=%22236%22 y=%22206%22 width=%2244%22 height=%2248%22 fill=%22%23d9d2c0%22 stroke=%22%23c2bba8%22 stroke-width=%222%22/%3E%0A  %3Crect x=%22320%22 y=%22206%22 width=%2244%22 height=%2248%22 fill=%22%23d9d2c0%22 stroke=%22%23c2bba8%22 stroke-width=%222%22/%3E%0A  %3Cline x1=%22236%22 y1=%22220%22 x2=%22280%22 y2=%22220%22 stroke=%22%23c2bba8%22 stroke-width=%222%22/%3E%0A  %3Cline x1=%22320%22 y1=%22220%22 x2=%22364%22 y2=%22220%22 stroke=%22%23c2bba8%22 stroke-width=%222%22/%3E%0A%3C/g%3E%3C/svg%3E");background-size:cover;background-position:center}
+.sw-linen-close{background-image:url("https://images.unsplash.com/photo-1740711152088-88a009e877bb?auto=format&fit=crop&w=900&q=70&crop=focalpoint&fp-z=2.0"),url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 600 440%22%3E%3Crect width=%22600%22 height=%22440%22 fill=%22%23d9d2c0%22/%3E%3Crect width=%22600%22 height=%22440%22 fill=%22%23d9d2c0%22/%3E%3Cline x1=%220%22 y1=%226%22 x2=%22600%22 y2=%226%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%2217%22 x2=%22600%22 y2=%2217%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%2228%22 x2=%22600%22 y2=%2228%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%2239%22 x2=%22600%22 y2=%2239%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%2250%22 x2=%22600%22 y2=%2250%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%2261%22 x2=%22600%22 y2=%2261%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%2272%22 x2=%22600%22 y2=%2272%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%2283%22 x2=%22600%22 y2=%2283%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%2294%22 x2=%22600%22 y2=%2294%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22105%22 x2=%22600%22 y2=%22105%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22116%22 x2=%22600%22 y2=%22116%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22127%22 x2=%22600%22 y2=%22127%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22138%22 x2=%22600%22 y2=%22138%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22149%22 x2=%22600%22 y2=%22149%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22160%22 x2=%22600%22 y2=%22160%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22171%22 x2=%22600%22 y2=%22171%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22182%22 x2=%22600%22 y2=%22182%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22193%22 x2=%22600%22 y2=%22193%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22204%22 x2=%22600%22 y2=%22204%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22215%22 x2=%22600%22 y2=%22215%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22226%22 x2=%22600%22 y2=%22226%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22237%22 x2=%22600%22 y2=%22237%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22248%22 x2=%22600%22 y2=%22248%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22259%22 x2=%22600%22 y2=%22259%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22270%22 x2=%22600%22 y2=%22270%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22281%22 x2=%22600%22 y2=%22281%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22292%22 x2=%22600%22 y2=%22292%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22303%22 x2=%22600%22 y2=%22303%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22314%22 x2=%22600%22 y2=%22314%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22325%22 x2=%22600%22 y2=%22325%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22336%22 x2=%22600%22 y2=%22336%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22347%22 x2=%22600%22 y2=%22347%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22358%22 x2=%22600%22 y2=%22358%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22369%22 x2=%22600%22 y2=%22369%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22380%22 x2=%22600%22 y2=%22380%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22391%22 x2=%22600%22 y2=%22391%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22402%22 x2=%22600%22 y2=%22402%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22413%22 x2=%22600%22 y2=%22413%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22424%22 x2=%22600%22 y2=%22424%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22435%22 x2=%22600%22 y2=%22435%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22446%22 x2=%22600%22 y2=%22446%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22457%22 x2=%22600%22 y2=%22457%22 stroke=%22%23c2bba8%22 stroke-width=%222%22 opacity=%220.55%22/%3E%3Cline x1=%224%22 y1=%220%22 x2=%224%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%2217%22 y1=%220%22 x2=%2217%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%2230%22 y1=%220%22 x2=%2230%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%2243%22 y1=%220%22 x2=%2243%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%2256%22 y1=%220%22 x2=%2256%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%2269%22 y1=%220%22 x2=%2269%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%2282%22 y1=%220%22 x2=%2282%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%2295%22 y1=%220%22 x2=%2295%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22108%22 y1=%220%22 x2=%22108%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22121%22 y1=%220%22 x2=%22121%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22134%22 y1=%220%22 x2=%22134%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22147%22 y1=%220%22 x2=%22147%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22160%22 y1=%220%22 x2=%22160%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22173%22 y1=%220%22 x2=%22173%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22186%22 y1=%220%22 x2=%22186%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22199%22 y1=%220%22 x2=%22199%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22212%22 y1=%220%22 x2=%22212%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22225%22 y1=%220%22 x2=%22225%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22238%22 y1=%220%22 x2=%22238%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22251%22 y1=%220%22 x2=%22251%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22264%22 y1=%220%22 x2=%22264%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22277%22 y1=%220%22 x2=%22277%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22290%22 y1=%220%22 x2=%22290%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22303%22 y1=%220%22 x2=%22303%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22316%22 y1=%220%22 x2=%22316%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22329%22 y1=%220%22 x2=%22329%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22342%22 y1=%220%22 x2=%22342%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22355%22 y1=%220%22 x2=%22355%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22368%22 y1=%220%22 x2=%22368%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22381%22 y1=%220%22 x2=%22381%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22394%22 y1=%220%22 x2=%22394%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22407%22 y1=%220%22 x2=%22407%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22420%22 y1=%220%22 x2=%22420%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22433%22 y1=%220%22 x2=%22433%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22446%22 y1=%220%22 x2=%22446%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22459%22 y1=%220%22 x2=%22459%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22472%22 y1=%220%22 x2=%22472%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22485%22 y1=%220%22 x2=%22485%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22498%22 y1=%220%22 x2=%22498%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22511%22 y1=%220%22 x2=%22511%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22524%22 y1=%220%22 x2=%22524%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22537%22 y1=%220%22 x2=%22537%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22550%22 y1=%220%22 x2=%22550%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22563%22 y1=%220%22 x2=%22563%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22576%22 y1=%220%22 x2=%22576%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cline x1=%22589%22 y1=%220%22 x2=%22589%22 y2=%22440%22 stroke=%22%23e7e0cf%22 stroke-width=%223%22 opacity=%220.55%22/%3E%3Cpolygon points=%220,300 600,120 600,210 0,390%22 fill=%22%23e7e0cf%22 opacity=%220.55%22/%3E%3Cline x1=%220%22 y1=%22300%22 x2=%22600%22 y2=%22120%22 stroke=%22%23c2bba8%22 stroke-width=%222.5%22/%3E%3Cline x1=%2240%22 y1=%22402%22 x2=%22560%22 y2=%22402%22 stroke=%22%23c2bba8%22 stroke-width=%223%22 stroke-dasharray=%229 7%22/%3E%3Cline x1=%2240%22 y1=%22414%22 x2=%22560%22 y2=%22414%22 stroke=%22%23c2bba8%22 stroke-width=%223%22 stroke-dasharray=%229 7%22/%3E%3C/svg%3E");background-size:cover;background-position:center}
+.sw-linen-model{background-image:url("https://images.unsplash.com/photo-1591357037205-166318b51afd?auto=format&fit=crop&w=900&q=70"),url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 600 440%22%3E%3Crect width=%22600%22 height=%22440%22 fill=%22%23f1ede4%22/%3E%3Cpath d=%22M300,52 q-16,-26 8,-30 q26,-4 18,22%22 fill=%22none%22 stroke=%22%236e6353%22 stroke-width=%226%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M300,58 L150,128 L450,128 Z%22 fill=%22none%22 stroke=%22%238a7c66%22 stroke-width=%229%22 stroke-linejoin=%22round%22/%3E%3Cellipse cx=%22300%22 cy=%22408%22 rx=%22130%22 ry=%2211%22 fill=%22rgba(40,35,25,0.10)%22/%3E%3Cg transform=%22translate(0,-8)%22%3E%0A  %3Cpath d=%22M212,150 L160,168 L154,308 L206,296 Z%22 fill=%22%23d9d2c0%22 stroke=%22%23c2bba8%22 stroke-width=%222%22/%3E%0A  %3Cpath d=%22M388,150 L440,168 L446,308 L394,296 Z%22 fill=%22%23d9d2c0%22 stroke=%22%23c2bba8%22 stroke-width=%222%22/%3E%0A  %3Cpath d=%22M212,144 L388,144 L398,384 L202,384 Z%22 fill=%22%23d9d2c0%22 stroke=%22%23c2bba8%22 stroke-width=%222%22/%3E%0A  %3Cpath d=%22M212,144 L300,144 L300,178 L258,160 Z%22 fill=%22%23e7e0cf%22 stroke=%22%23c2bba8%22 stroke-width=%222%22/%3E%0A  %3Cpath d=%22M388,144 L300,144 L300,178 L342,160 Z%22 fill=%22%23e7e0cf%22 stroke=%22%23c2bba8%22 stroke-width=%222%22/%3E%0A  %3Cline x1=%22300%22 y1=%22178%22 x2=%22300%22 y2=%22382%22 stroke=%22%23c2bba8%22 stroke-width=%222%22/%3E%0A  %3Ccircle cx=%22300%22 cy=%22200%22 r=%223.4%22 fill=%22%23c2bba8%22/%3E%3Ccircle cx=%22300%22 cy=%22238%22 r=%223.4%22 fill=%22%23c2bba8%22/%3E%3Ccircle cx=%22300%22 cy=%22276%22 r=%223.4%22 fill=%22%23c2bba8%22/%3E%3Ccircle cx=%22300%22 cy=%22314%22 r=%223.4%22 fill=%22%23c2bba8%22/%3E%3Ccircle cx=%22300%22 cy=%22352%22 r=%223.4%22 fill=%22%23c2bba8%22/%3E%0A  %3Crect x=%22236%22 y=%22206%22 width=%2244%22 height=%2248%22 fill=%22%23d9d2c0%22 stroke=%22%23c2bba8%22 stroke-width=%222%22/%3E%0A  %3Crect x=%22320%22 y=%22206%22 width=%2244%22 height=%2248%22 fill=%22%23d9d2c0%22 stroke=%22%23c2bba8%22 stroke-width=%222%22/%3E%0A  %3Cline x1=%22236%22 y1=%22220%22 x2=%22280%22 y2=%22220%22 stroke=%22%23c2bba8%22 stroke-width=%222%22/%3E%0A  %3Cline x1=%22320%22 y1=%22220%22 x2=%22364%22 y2=%22220%22 stroke=%22%23c2bba8%22 stroke-width=%222%22/%3E%0A%3C/g%3E%3C/svg%3E");background-size:cover;background-position:center}
+.sw-knit{background-image:url("https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=900&q=70"),url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 600 440%22%3E%3Crect width=%22600%22 height=%22440%22 fill=%22%23f1ede4%22/%3E%3Cellipse cx=%22300%22 cy=%22392%22 rx=%22150%22 ry=%2213%22 fill=%22rgba(40,35,25,0.10)%22/%3E%3Cpath d=%22M216,172 L172,190 L180,326 L220,314 Z%22 fill=%22%23c89a5b%22 stroke=%22%23ad8148%22 stroke-width=%222%22/%3E%0A  %3Cpath d=%22M384,172 L428,190 L420,326 L380,314 Z%22 fill=%22%23c89a5b%22 stroke=%22%23ad8148%22 stroke-width=%222%22/%3E%0A  %3Cpath d=%22M176,306 L182,326 L220,314 L216,295 Z%22 fill=%22%23dcb172%22 stroke=%22%23ad8148%22 stroke-width=%222%22/%3E%0A  %3Cpath d=%22M424,306 L418,326 L380,314 L384,295 Z%22 fill=%22%23dcb172%22 stroke=%22%23ad8148%22 stroke-width=%222%22/%3E%0A  %3Cpath d=%22M216,166 Q300,142 384,166 L392,338 L208,338 Z%22 fill=%22%23c89a5b%22 stroke=%22%23ad8148%22 stroke-width=%222%22/%3E%0A  %3Crect x=%22208%22 y=%22338%22 width=%22184%22 height=%2222%22 fill=%22%23dcb172%22 stroke=%22%23ad8148%22 stroke-width=%222%22/%3E%3Cline x1=%22214%22 y1=%22341%22 x2=%22214%22 y2=%22357%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22224%22 y1=%22341%22 x2=%22224%22 y2=%22357%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22234%22 y1=%22341%22 x2=%22234%22 y2=%22357%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22244%22 y1=%22341%22 x2=%22244%22 y2=%22357%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22254%22 y1=%22341%22 x2=%22254%22 y2=%22357%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22264%22 y1=%22341%22 x2=%22264%22 y2=%22357%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22274%22 y1=%22341%22 x2=%22274%22 y2=%22357%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22284%22 y1=%22341%22 x2=%22284%22 y2=%22357%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22294%22 y1=%22341%22 x2=%22294%22 y2=%22357%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22304%22 y1=%22341%22 x2=%22304%22 y2=%22357%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22314%22 y1=%22341%22 x2=%22314%22 y2=%22357%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22324%22 y1=%22341%22 x2=%22324%22 y2=%22357%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22334%22 y1=%22341%22 x2=%22334%22 y2=%22357%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22344%22 y1=%22341%22 x2=%22344%22 y2=%22357%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22354%22 y1=%22341%22 x2=%22354%22 y2=%22357%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22364%22 y1=%22341%22 x2=%22364%22 y2=%22357%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22374%22 y1=%22341%22 x2=%22374%22 y2=%22357%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22384%22 y1=%22341%22 x2=%22384%22 y2=%22357%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cpath d=%22M258,160 Q300,138 342,160 Q300,180 258,160 Z%22 fill=%22%23dcb172%22 stroke=%22%23ad8148%22 stroke-width=%222%22/%3E%3C/svg%3E");background-size:cover;background-position:center}
+.sw-knit-close{background-image:url("https://images.unsplash.com/photo-1636716018960-eb737dccb185?auto=format&fit=crop&w=900&q=70"),url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 600 440%22%3E%3Crect width=%22600%22 height=%22440%22 fill=%22%23c89a5b%22/%3E%3Cpath d=%22M0,-20 L30,6 L60,-20 L90,6 L120,-20 L150,6 L180,-20 L210,6 L240,-20 L270,6 L300,-20 L330,6 L360,-20 L390,6 L420,-20 L450,6 L480,-20 L510,6 L540,-20 L570,6 L600,-20%22 fill=%22none%22 stroke=%22%23dcb172%22 stroke-width=%2213%22/%3E%3Cpath d=%22M0,24 L30,50 L60,24 L90,50 L120,24 L150,50 L180,24 L210,50 L240,24 L270,50 L300,24 L330,50 L360,24 L390,50 L420,24 L450,50 L480,24 L510,50 L540,24 L570,50 L600,24%22 fill=%22none%22 stroke=%22%23ad8148%22 stroke-width=%2213%22/%3E%3Cpath d=%22M0,68 L30,94 L60,68 L90,94 L120,68 L150,94 L180,68 L210,94 L240,68 L270,94 L300,68 L330,94 L360,68 L390,94 L420,68 L450,94 L480,68 L510,94 L540,68 L570,94 L600,68%22 fill=%22none%22 stroke=%22%23dcb172%22 stroke-width=%2213%22/%3E%3Cpath d=%22M0,112 L30,138 L60,112 L90,138 L120,112 L150,138 L180,112 L210,138 L240,112 L270,138 L300,112 L330,138 L360,112 L390,138 L420,112 L450,138 L480,112 L510,138 L540,112 L570,138 L600,112%22 fill=%22none%22 stroke=%22%23ad8148%22 stroke-width=%2213%22/%3E%3Cpath d=%22M0,156 L30,182 L60,156 L90,182 L120,156 L150,182 L180,156 L210,182 L240,156 L270,182 L300,156 L330,182 L360,156 L390,182 L420,156 L450,182 L480,156 L510,182 L540,156 L570,182 L600,156%22 fill=%22none%22 stroke=%22%23dcb172%22 stroke-width=%2213%22/%3E%3Cpath d=%22M0,200 L30,226 L60,200 L90,226 L120,200 L150,226 L180,200 L210,226 L240,200 L270,226 L300,200 L330,226 L360,200 L390,226 L420,200 L450,226 L480,200 L510,226 L540,200 L570,226 L600,200%22 fill=%22none%22 stroke=%22%23ad8148%22 stroke-width=%2213%22/%3E%3Cpath d=%22M0,244 L30,270 L60,244 L90,270 L120,244 L150,270 L180,244 L210,270 L240,244 L270,270 L300,244 L330,270 L360,244 L390,270 L420,244 L450,270 L480,244 L510,270 L540,244 L570,270 L600,244%22 fill=%22none%22 stroke=%22%23dcb172%22 stroke-width=%2213%22/%3E%3Cpath d=%22M0,288 L30,314 L60,288 L90,314 L120,288 L150,314 L180,288 L210,314 L240,288 L270,314 L300,288 L330,314 L360,288 L390,314 L420,288 L450,314 L480,288 L510,314 L540,288 L570,314 L600,288%22 fill=%22none%22 stroke=%22%23ad8148%22 stroke-width=%2213%22/%3E%3Cpath d=%22M0,332 L30,358 L60,332 L90,358 L120,332 L150,358 L180,332 L210,358 L240,332 L270,358 L300,332 L330,358 L360,332 L390,358 L420,332 L450,358 L480,332 L510,358 L540,332 L570,358 L600,332%22 fill=%22none%22 stroke=%22%23dcb172%22 stroke-width=%2213%22/%3E%3Cpath d=%22M0,376 L30,402 L60,376 L90,402 L120,376 L150,402 L180,376 L210,402 L240,376 L270,402 L300,376 L330,402 L360,376 L390,402 L420,376 L450,402 L480,376 L510,402 L540,376 L570,402 L600,376%22 fill=%22none%22 stroke=%22%23ad8148%22 stroke-width=%2213%22/%3E%3Crect x=%220%22 y=%22372%22 width=%22600%22 height=%2268%22 fill=%22%23c89a5b%22/%3E%3Cline x1=%224%22 y1=%22376%22 x2=%224%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%2218%22 y1=%22376%22 x2=%2218%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%2232%22 y1=%22376%22 x2=%2232%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%2246%22 y1=%22376%22 x2=%2246%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%2260%22 y1=%22376%22 x2=%2260%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%2274%22 y1=%22376%22 x2=%2274%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%2288%22 y1=%22376%22 x2=%2288%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22102%22 y1=%22376%22 x2=%22102%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22116%22 y1=%22376%22 x2=%22116%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22130%22 y1=%22376%22 x2=%22130%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22144%22 y1=%22376%22 x2=%22144%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22158%22 y1=%22376%22 x2=%22158%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22172%22 y1=%22376%22 x2=%22172%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22186%22 y1=%22376%22 x2=%22186%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22200%22 y1=%22376%22 x2=%22200%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22214%22 y1=%22376%22 x2=%22214%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22228%22 y1=%22376%22 x2=%22228%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22242%22 y1=%22376%22 x2=%22242%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22256%22 y1=%22376%22 x2=%22256%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22270%22 y1=%22376%22 x2=%22270%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22284%22 y1=%22376%22 x2=%22284%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22298%22 y1=%22376%22 x2=%22298%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22312%22 y1=%22376%22 x2=%22312%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22326%22 y1=%22376%22 x2=%22326%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22340%22 y1=%22376%22 x2=%22340%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22354%22 y1=%22376%22 x2=%22354%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22368%22 y1=%22376%22 x2=%22368%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22382%22 y1=%22376%22 x2=%22382%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22396%22 y1=%22376%22 x2=%22396%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22410%22 y1=%22376%22 x2=%22410%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22424%22 y1=%22376%22 x2=%22424%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22438%22 y1=%22376%22 x2=%22438%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22452%22 y1=%22376%22 x2=%22452%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22466%22 y1=%22376%22 x2=%22466%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22480%22 y1=%22376%22 x2=%22480%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22494%22 y1=%22376%22 x2=%22494%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22508%22 y1=%22376%22 x2=%22508%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22522%22 y1=%22376%22 x2=%22522%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22536%22 y1=%22376%22 x2=%22536%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22550%22 y1=%22376%22 x2=%22550%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22564%22 y1=%22376%22 x2=%22564%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22578%22 y1=%22376%22 x2=%22578%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3Cline x1=%22592%22 y1=%22376%22 x2=%22592%22 y2=%22436%22 stroke=%22%23ad8148%22 stroke-width=%222.4%22/%3E%3C/svg%3E");background-size:cover;background-position:center}
+.sw-trouser{background-image:url("https://images.unsplash.com/photo-1715233749622-3216fe49e682?auto=format&fit=crop&w=900&q=70"),url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 600 440%22%3E%3Crect width=%22600%22 height=%22440%22 fill=%22%23f1ede4%22/%3E%3Cellipse cx=%22300%22 cy=%22406%22 rx=%22120%22 ry=%2210%22 fill=%22rgba(40,35,25,0.10)%22/%3E%3Crect x=%22226%22 y=%2292%22 width=%22148%22 height=%2226%22 rx=%224%22 fill=%22%23a9a795%22 stroke=%22%238f8d7c%22 stroke-width=%222%22/%3E%0A  %3Ccircle cx=%22300%22 cy=%22105%22 r=%224%22 fill=%22%238f8d7c%22/%3E%0A  %3Cpath d=%22M228,118 L296,118 L286,396 L234,396 Z%22 fill=%22%23a9a795%22 stroke=%22%238f8d7c%22 stroke-width=%222%22/%3E%0A  %3Cpath d=%22M304,118 L372,118 L366,396 L314,396 Z%22 fill=%22%23a9a795%22 stroke=%22%238f8d7c%22 stroke-width=%222%22/%3E%0A  %3Cline x1=%22262%22 y1=%22140%22 x2=%22258%22 y2=%22388%22 stroke=%22%23bcbaa9%22 stroke-width=%224%22/%3E%0A  %3Cline x1=%22338%22 y1=%22140%22 x2=%22340%22 y2=%22388%22 stroke=%22%23bcbaa9%22 stroke-width=%224%22/%3E%0A  %3Cline x1=%22234%22 y1=%22386%22 x2=%22286%22 y2=%22386%22 stroke=%22%238f8d7c%22 stroke-width=%223%22/%3E%0A  %3Cline x1=%22314%22 y1=%22386%22 x2=%22366%22 y2=%22386%22 stroke=%22%238f8d7c%22 stroke-width=%223%22/%3E%3C/svg%3E");background-size:cover;background-position:center}
+.sw-trouser-drape{background-image:url("https://images.unsplash.com/photo-1715233749622-3216fe49e682?auto=format&fit=crop&w=900&q=70&crop=focalpoint&fp-z=1.8"),url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 600 440%22%3E%3Crect width=%22600%22 height=%22440%22 fill=%22%23a9a795%22/%3E%3Cpath d=%22M-20,-10 C-44,120 6,300 -32,460 L14,460 C52,300 2,120 26,-10 Z%22 fill=%22%238f8d7c%22 opacity=%220.9%22/%3E%3Cpath d=%22M72,-10 C48,120 98,300 60,460 L106,460 C144,300 94,120 118,-10 Z%22 fill=%22%23bcbaa9%22 opacity=%220.9%22/%3E%3Cpath d=%22M164,-10 C140,120 190,300 152,460 L198,460 C236,300 186,120 210,-10 Z%22 fill=%22%238f8d7c%22 opacity=%220.9%22/%3E%3Cpath d=%22M256,-10 C232,120 282,300 244,460 L290,460 C328,300 278,120 302,-10 Z%22 fill=%22%23bcbaa9%22 opacity=%220.9%22/%3E%3Cpath d=%22M348,-10 C324,120 374,300 336,460 L382,460 C420,300 370,120 394,-10 Z%22 fill=%22%238f8d7c%22 opacity=%220.9%22/%3E%3Cpath d=%22M440,-10 C416,120 466,300 428,460 L474,460 C512,300 462,120 486,-10 Z%22 fill=%22%23bcbaa9%22 opacity=%220.9%22/%3E%3Cpath d=%22M532,-10 C508,120 558,300 520,460 L566,460 C604,300 554,120 578,-10 Z%22 fill=%22%238f8d7c%22 opacity=%220.9%22/%3E%3Cpath d=%22M624,-10 C600,120 650,300 612,460 L658,460 C696,300 646,120 670,-10 Z%22 fill=%22%23bcbaa9%22 opacity=%220.9%22/%3E%3C/svg%3E");background-size:cover;background-position:center}
+.sw-tote{background-image:url("https://images.unsplash.com/photo-1574365569389-a10d488ca3fb?auto=format&fit=crop&w=900&q=70"),url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 600 440%22%3E%3Crect width=%22600%22 height=%22440%22 fill=%22%23f1ede4%22/%3E%3Cellipse cx=%22300%22 cy=%22396%22 rx=%22140%22 ry=%2212%22 fill=%22rgba(40,35,25,0.10)%22/%3E%3Cg transform=%22translate(0,0) rotate(0 300 270) scale(1.0)%22 transform-origin=%22300 270%22%3E%0A  %3Cpath d=%22M243,176 C243,108 357,108 357,176%22 fill=%22none%22 stroke=%22%239c6244%22 stroke-width=%2213%22 stroke-linecap=%22round%22/%3E%0A  %3Cpath d=%22M226,176 C226,96 374,96 374,176%22 fill=%22none%22 stroke=%22%23b97a58%22 stroke-width=%2213%22 stroke-linecap=%22round%22/%3E%0A  %3Cpath d=%22M192,172 L408,172 L386,374 L214,374 Z%22 fill=%22%23b97a58%22 stroke=%22%239c6244%22 stroke-width=%222.5%22/%3E%0A  %3Crect x=%22192%22 y=%22172%22 width=%22216%22 height=%2226%22 fill=%22%23cf9572%22 stroke=%22%239c6244%22 stroke-width=%222%22/%3E%0A  %3Cline x1=%22222%22 y1=%22206%22 x2=%22240%22 y2=%22368%22 stroke=%22%239c6244%22 stroke-width=%222%22 stroke-dasharray=%226 5%22/%3E%0A  %3Cline x1=%22378%22 y1=%22206%22 x2=%22360%22 y2=%22368%22 stroke=%22%239c6244%22 stroke-width=%222%22 stroke-dasharray=%226 5%22/%3E%0A  %3Crect x=%22272%22 y=%22252%22 width=%2256%22 height=%2240%22 rx=%223%22 fill=%22%23cf9572%22 stroke=%22%239c6244%22 stroke-width=%222%22/%3E%0A%3C/g%3E%3C/svg%3E");background-size:cover;background-position:center}
+.sw-tote-flat{background-image:url("https://images.unsplash.com/photo-1630381260512-e3fe55c11973?auto=format&fit=crop&w=900&q=70"),url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 600 440%22%3E%3Crect width=%22600%22 height=%22440%22 fill=%22%23e9e3d6%22/%3E%3Crect width=%22600%22 height=%22440%22 fill=%22%23e9e3d6%22/%3E%3Ccircle cx=%22488%22 cy=%22116%22 r=%2244%22 fill=%22%23d9d2c0%22 stroke=%22%23c2bba8%22 stroke-width=%222%22/%3E%3Ccircle cx=%22488%22 cy=%22116%22 r=%2230%22 fill=%22%23e7e0cf%22/%3E%3Cg stroke=%22%233a3630%22 stroke-width=%225%22 fill=%22none%22%3E%3Ccircle cx=%2296%22 cy=%22356%22 r=%2220%22/%3E%3Ccircle cx=%22152%22 cy=%22356%22 r=%2220%22/%3E%3Cpath d=%22M116,356 q12,-12 16,0%22/%3E%3C/g%3E%3Cellipse cx=%22310%22 cy=%22400%22 rx=%22150%22 ry=%2212%22 fill=%22rgba(40,35,25,0.10)%22/%3E%3Cg transform=%22translate(0,0) rotate(-7 300 270) scale(0.94)%22 transform-origin=%22300 270%22%3E%0A  %3Cpath d=%22M243,176 C243,108 357,108 357,176%22 fill=%22none%22 stroke=%22%239c6244%22 stroke-width=%2213%22 stroke-linecap=%22round%22/%3E%0A  %3Cpath d=%22M226,176 C226,96 374,96 374,176%22 fill=%22none%22 stroke=%22%23b97a58%22 stroke-width=%2213%22 stroke-linecap=%22round%22/%3E%0A  %3Cpath d=%22M192,172 L408,172 L386,374 L214,374 Z%22 fill=%22%23b97a58%22 stroke=%22%239c6244%22 stroke-width=%222.5%22/%3E%0A  %3Crect x=%22192%22 y=%22172%22 width=%22216%22 height=%2226%22 fill=%22%23cf9572%22 stroke=%22%239c6244%22 stroke-width=%222%22/%3E%0A  %3Cline x1=%22222%22 y1=%22206%22 x2=%22240%22 y2=%22368%22 stroke=%22%239c6244%22 stroke-width=%222%22 stroke-dasharray=%226 5%22/%3E%0A  %3Cline x1=%22378%22 y1=%22206%22 x2=%22360%22 y2=%22368%22 stroke=%22%239c6244%22 stroke-width=%222%22 stroke-dasharray=%226 5%22/%3E%0A  %3Crect x=%22272%22 y=%22252%22 width=%2256%22 height=%2240%22 rx=%223%22 fill=%22%23cf9572%22 stroke=%22%239c6244%22 stroke-width=%222%22/%3E%0A%3C/g%3E%3C/svg%3E");background-size:cover;background-position:center}
+.sw-shoe{background-image:url("https://images.unsplash.com/photo-1562183241-b937e95585b6?auto=format&fit=crop&w=900&q=70"),url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 600 440%22%3E%3Crect width=%22600%22 height=%22440%22 fill=%22%23f1ede4%22/%3E%3Cellipse cx=%22305%22 cy=%22352%22 rx=%22170%22 ry=%2212%22 fill=%22rgba(40,35,25,0.10)%22/%3E%3Cg transform=%22rotate(0 300 290) translate(0,0)%22%3E%0A  %3Cpath d=%22M152,296 C162,270 188,256 220,250 C252,244 274,232 300,222 L334,240 C350,222 374,210 400,210 C436,212 456,242 462,296 Z%22 fill=%22%237c899e%22 stroke=%22%235a6678%22 stroke-width=%222.5%22/%3E%0A  %3Cpath d=%22M400,210 C436,212 456,242 462,296 L400,296 Z%22 fill=%22%23a3aec0%22 stroke=%22%235a6678%22 stroke-width=%222%22/%3E%0A  %3Cpath d=%22M334,240 C346,260 350,278 352,296 L400,296 L400,212 C374,212 350,224 334,240 Z%22 fill=%22%237c899e%22/%3E%0A  %3Cpath d=%22M334,240 C346,260 350,278 352,296%22 fill=%22none%22 stroke=%22%235a6678%22 stroke-width=%222%22/%3E%0A  %3Cpath d=%22M152,296 C160,274 182,260 210,252 C222,266 228,282 230,296 Z%22 fill=%22%235a6678%22/%3E%0A  %3Cpath d=%22M300,222 L334,240%22 fill=%22none%22 stroke=%22%235a6678%22 stroke-width=%222%22/%3E%0A  %3Cline x1=%22252%22 y1=%22252%22 x2=%22272%22 y2=%22266%22 stroke=%22%23f1ede4%22 stroke-width=%225%22 stroke-linecap=%22round%22/%3E%3Cline x1=%22268%22 y1=%22246%22 x2=%22288%22 y2=%22260%22 stroke=%22%23f1ede4%22 stroke-width=%225%22 stroke-linecap=%22round%22/%3E%3Cline x1=%22284%22 y1=%22240%22 x2=%22304%22 y2=%22254%22 stroke=%22%23f1ede4%22 stroke-width=%225%22 stroke-linecap=%22round%22/%3E%3Cline x1=%22300%22 y1=%22234%22 x2=%22320%22 y2=%22248%22 stroke=%22%23f1ede4%22 stroke-width=%225%22 stroke-linecap=%22round%22/%3E%0A  %3Cpath d=%22M376,222 q14,-12 22,2%22 fill=%22none%22 stroke=%22%235a6678%22 stroke-width=%225%22 stroke-linecap=%22round%22/%3E%0A  %3Cpath d=%22M146,292 L466,280 L468,308 C360,324 220,328 146,314 Z%22 fill=%22%233a4150%22/%3E%0A  %3Cpath d=%22M150,296 L462,284%22 stroke=%22%232e7a5e%22 stroke-width=%225%22/%3E%0A  %3Crect x=%22160%22 y=%22316%22 width=%2220%22 height=%229%22 rx=%222%22 fill=%22%233a4150%22/%3E%3Crect x=%22204%22 y=%22316%22 width=%2220%22 height=%229%22 rx=%222%22 fill=%22%233a4150%22/%3E%3Crect x=%22248%22 y=%22316%22 width=%2220%22 height=%229%22 rx=%222%22 fill=%22%233a4150%22/%3E%3Crect x=%22292%22 y=%22316%22 width=%2220%22 height=%229%22 rx=%222%22 fill=%22%233a4150%22/%3E%3Crect x=%22336%22 y=%22316%22 width=%2220%22 height=%229%22 rx=%222%22 fill=%22%233a4150%22/%3E%3Crect x=%22380%22 y=%22316%22 width=%2220%22 height=%229%22 rx=%222%22 fill=%22%233a4150%22/%3E%3Crect x=%22424%22 y=%22316%22 width=%2220%22 height=%229%22 rx=%222%22 fill=%22%233a4150%22/%3E%0A%3C/g%3E%3C/svg%3E");background-size:cover;background-position:center}
+.sw-shoe-action{background-image:url("https://images.unsplash.com/photo-1718248028293-934f04a578db?auto=format&fit=crop&w=900&q=70"),url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 600 440%22%3E%3Crect width=%22600%22 height=%22440%22 fill=%22%23e3e8df%22/%3E%3Crect width=%22600%22 height=%22440%22 fill=%22%23e3e8df%22/%3E%3Cpath d=%22M0,300 Q140,236 300,268 T600,250 L600,440 L0,440 Z%22 fill=%22%239db48c%22/%3E%3Cpath d=%22M0,346 Q200,306 600,330 L600,440 L0,440 Z%22 fill=%22%237b9468%22/%3E%3Cpath d=%22M40,376 Q300,346 560,372%22 fill=%22none%22 stroke=%22%23b9a585%22 stroke-width=%2222%22 stroke-linecap=%22round%22/%3E%3Cline x1=%2260%22 y1=%22210%22 x2=%22156%22 y2=%22208%22 stroke=%22%23ffffff%22 stroke-width=%226%22 stroke-linecap=%22round%22 opacity=%220.8%22/%3E%3Cline x1=%2276%22 y1=%22236%22 x2=%22172%22 y2=%22234%22 stroke=%22%23ffffff%22 stroke-width=%226%22 stroke-linecap=%22round%22 opacity=%220.8%22/%3E%3Cline x1=%2292%22 y1=%22262%22 x2=%22188%22 y2=%22260%22 stroke=%22%23ffffff%22 stroke-width=%226%22 stroke-linecap=%22round%22 opacity=%220.8%22/%3E%3Ccircle cx=%22210%22 cy=%22392%22 r=%225%22 fill=%22%236e5b3f%22/%3E%3Ccircle cx=%22244%22 cy=%22387%22 r=%224%22 fill=%22%236e5b3f%22/%3E%3Ccircle cx=%22278%22 cy=%22382%22 r=%223%22 fill=%22%236e5b3f%22/%3E%3Ccircle cx=%22312%22 cy=%22377%22 r=%222%22 fill=%22%236e5b3f%22/%3E%3Cg transform=%22rotate(-11 300 290) translate(0,-34)%22%3E%0A  %3Cpath d=%22M152,296 C162,270 188,256 220,250 C252,244 274,232 300,222 L334,240 C350,222 374,210 400,210 C436,212 456,242 462,296 Z%22 fill=%22%237c899e%22 stroke=%22%235a6678%22 stroke-width=%222.5%22/%3E%0A  %3Cpath d=%22M400,210 C436,212 456,242 462,296 L400,296 Z%22 fill=%22%23a3aec0%22 stroke=%22%235a6678%22 stroke-width=%222%22/%3E%0A  %3Cpath d=%22M334,240 C346,260 350,278 352,296 L400,296 L400,212 C374,212 350,224 334,240 Z%22 fill=%22%237c899e%22/%3E%0A  %3Cpath d=%22M334,240 C346,260 350,278 352,296%22 fill=%22none%22 stroke=%22%235a6678%22 stroke-width=%222%22/%3E%0A  %3Cpath d=%22M152,296 C160,274 182,260 210,252 C222,266 228,282 230,296 Z%22 fill=%22%235a6678%22/%3E%0A  %3Cpath d=%22M300,222 L334,240%22 fill=%22none%22 stroke=%22%235a6678%22 stroke-width=%222%22/%3E%0A  %3Cline x1=%22252%22 y1=%22252%22 x2=%22272%22 y2=%22266%22 stroke=%22%23f1ede4%22 stroke-width=%225%22 stroke-linecap=%22round%22/%3E%3Cline x1=%22268%22 y1=%22246%22 x2=%22288%22 y2=%22260%22 stroke=%22%23f1ede4%22 stroke-width=%225%22 stroke-linecap=%22round%22/%3E%3Cline x1=%22284%22 y1=%22240%22 x2=%22304%22 y2=%22254%22 stroke=%22%23f1ede4%22 stroke-width=%225%22 stroke-linecap=%22round%22/%3E%3Cline x1=%22300%22 y1=%22234%22 x2=%22320%22 y2=%22248%22 stroke=%22%23f1ede4%22 stroke-width=%225%22 stroke-linecap=%22round%22/%3E%0A  %3Cpath d=%22M376,222 q14,-12 22,2%22 fill=%22none%22 stroke=%22%235a6678%22 stroke-width=%225%22 stroke-linecap=%22round%22/%3E%0A  %3Cpath d=%22M146,292 L466,280 L468,308 C360,324 220,328 146,314 Z%22 fill=%22%233a4150%22/%3E%0A  %3Cpath d=%22M150,296 L462,284%22 stroke=%22%232e7a5e%22 stroke-width=%225%22/%3E%0A  %3Crect x=%22160%22 y=%22316%22 width=%2220%22 height=%229%22 rx=%222%22 fill=%22%233a4150%22/%3E%3Crect x=%22204%22 y=%22316%22 width=%2220%22 height=%229%22 rx=%222%22 fill=%22%233a4150%22/%3E%3Crect x=%22248%22 y=%22316%22 width=%2220%22 height=%229%22 rx=%222%22 fill=%22%233a4150%22/%3E%3Crect x=%22292%22 y=%22316%22 width=%2220%22 height=%229%22 rx=%222%22 fill=%22%233a4150%22/%3E%3Crect x=%22336%22 y=%22316%22 width=%2220%22 height=%229%22 rx=%222%22 fill=%22%233a4150%22/%3E%3Crect x=%22380%22 y=%22316%22 width=%2220%22 height=%229%22 rx=%222%22 fill=%22%233a4150%22/%3E%3Crect x=%22424%22 y=%22316%22 width=%2220%22 height=%229%22 rx=%222%22 fill=%22%233a4150%22/%3E%0A%3C/g%3E%3C/svg%3E");background-size:cover;background-position:center}
+.sw-rain{background-image:url("https://images.unsplash.com/photo-1620031844368-d999525cb5e2?auto=format&fit=crop&w=900&q=70"),url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 600 440%22%3E%3Crect width=%22600%22 height=%22440%22 fill=%22%23f1ede4%22/%3E%3Cellipse cx=%22300%22 cy=%22402%22 rx=%22140%22 ry=%2211%22 fill=%22rgba(40,35,25,0.10)%22/%3E%3Cpath d=%22M262,182 C262,128 338,128 338,182 Z%22 fill=%22%239cbac6%22 stroke=%22%235f8493%22 stroke-width=%222.5%22/%3E%0A  %3Cpath d=%22M212,196 L168,214 L162,330 L208,320 Z%22 fill=%22%237fa2b0%22 stroke=%22%235f8493%22 stroke-width=%222.5%22/%3E%0A  %3Cpath d=%22M388,196 L432,214 L438,330 L392,320 Z%22 fill=%22%237fa2b0%22 stroke=%22%235f8493%22 stroke-width=%222.5%22/%3E%0A  %3Cpath d=%22M212,188 L388,188 L398,386 L202,386 Z%22 fill=%22%237fa2b0%22 stroke=%22%235f8493%22 stroke-width=%222.5%22/%3E%0A  %3Cline x1=%22300%22 y1=%22188%22 x2=%22300%22 y2=%22384%22 stroke=%22%235f8493%22 stroke-width=%223.5%22/%3E%0A  %3Crect x=%22296%22 y=%22206%22 width=%228%22 height=%2214%22 rx=%222%22 fill=%22%235f8493%22/%3E%0A  %3Cline x1=%22236%22 y1=%22282%22 x2=%22272%22 y2=%22286%22 stroke=%22%235f8493%22 stroke-width=%223.5%22/%3E%0A  %3Cline x1=%22328%22 y1=%22286%22 x2=%22364%22 y2=%22282%22 stroke=%22%235f8493%22 stroke-width=%223.5%22/%3E%0A  %3Cpath d=%22M202,372 L398,372%22 stroke=%22%235f8493%22 stroke-width=%222%22 stroke-dasharray=%227 6%22/%3E%3C/svg%3E");background-size:cover;background-position:center}
+.sw-rain-worn{background-image:url("https://images.unsplash.com/photo-1620031844368-d999525cb5e2?auto=format&fit=crop&w=900&q=70&crop=focalpoint&fp-z=1.7"),url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 600 440%22%3E%3Crect width=%22600%22 height=%22440%22 fill=%22%23c3ccc9%22/%3E%3Crect width=%22600%22 height=%22440%22 fill=%22%23c3ccc9%22/%3E%3Crect width=%22600%22 height=%22150%22 fill=%22%23aab6b4%22/%3E%3Cellipse cx=%22300%22 cy=%22412%22 rx=%22170%22 ry=%2213%22 fill=%22%238fa3ad%22 opacity=%220.7%22/%3E%3Cpath d=%22M256,182 C250,98 350,98 344,182 L322,182 C326,124 274,124 278,182 Z%22 fill=%22%237fa2b0%22 stroke=%22%235f8493%22 stroke-width=%222.5%22/%3E%0A  %3Cpath d=%22M212,196 L168,214 L162,330 L208,320 Z%22 fill=%22%237fa2b0%22 stroke=%22%235f8493%22 stroke-width=%222.5%22/%3E%0A  %3Cpath d=%22M388,196 L432,214 L438,330 L392,320 Z%22 fill=%22%237fa2b0%22 stroke=%22%235f8493%22 stroke-width=%222.5%22/%3E%0A  %3Cpath d=%22M212,188 L388,188 L398,386 L202,386 Z%22 fill=%22%237fa2b0%22 stroke=%22%235f8493%22 stroke-width=%222.5%22/%3E%0A  %3Cline x1=%22300%22 y1=%22188%22 x2=%22300%22 y2=%22384%22 stroke=%22%235f8493%22 stroke-width=%223.5%22/%3E%0A  %3Crect x=%22296%22 y=%22206%22 width=%228%22 height=%2214%22 rx=%222%22 fill=%22%235f8493%22/%3E%0A  %3Cline x1=%22236%22 y1=%22282%22 x2=%22272%22 y2=%22286%22 stroke=%22%235f8493%22 stroke-width=%223.5%22/%3E%0A  %3Cline x1=%22328%22 y1=%22286%22 x2=%22364%22 y2=%22282%22 stroke=%22%235f8493%22 stroke-width=%223.5%22/%3E%0A  %3Cpath d=%22M202,372 L398,372%22 stroke=%22%235f8493%22 stroke-width=%222%22 stroke-dasharray=%227 6%22/%3E%3Cline x1=%2220%22 y1=%2250%22 x2=%226%22 y2=%22102%22 stroke=%22%23f4f7f7%22 stroke-width=%223%22 stroke-linecap=%22round%22 opacity=%220.75%22/%3E%3Cline x1=%2266%22 y1=%2212%22 x2=%2252%22 y2=%2264%22 stroke=%22%23f4f7f7%22 stroke-width=%223%22 stroke-linecap=%22round%22 opacity=%220.75%22/%3E%3Cline x1=%22112%22 y1=%2264%22 x2=%2298%22 y2=%22116%22 stroke=%22%23f4f7f7%22 stroke-width=%223%22 stroke-linecap=%22round%22 opacity=%220.75%22/%3E%3Cline x1=%22158%22 y1=%2226%22 x2=%22144%22 y2=%2278%22 stroke=%22%23f4f7f7%22 stroke-width=%223%22 stroke-linecap=%22round%22 opacity=%220.75%22/%3E%3Cline x1=%22204%22 y1=%2278%22 x2=%22190%22 y2=%22130%22 stroke=%22%23f4f7f7%22 stroke-width=%223%22 stroke-linecap=%22round%22 opacity=%220.75%22/%3E%3Cline x1=%22250%22 y1=%2240%22 x2=%22236%22 y2=%2292%22 stroke=%22%23f4f7f7%22 stroke-width=%223%22 stroke-linecap=%22round%22 opacity=%220.75%22/%3E%3Cline x1=%22296%22 y1=%222%22 x2=%22282%22 y2=%2254%22 stroke=%22%23f4f7f7%22 stroke-width=%223%22 stroke-linecap=%22round%22 opacity=%220.75%22/%3E%3Cline x1=%22342%22 y1=%2254%22 x2=%22328%22 y2=%22106%22 stroke=%22%23f4f7f7%22 stroke-width=%223%22 stroke-linecap=%22round%22 opacity=%220.75%22/%3E%3Cline x1=%22388%22 y1=%2216%22 x2=%22374%22 y2=%2268%22 stroke=%22%23f4f7f7%22 stroke-width=%223%22 stroke-linecap=%22round%22 opacity=%220.75%22/%3E%3Cline x1=%22434%22 y1=%2268%22 x2=%22420%22 y2=%22120%22 stroke=%22%23f4f7f7%22 stroke-width=%223%22 stroke-linecap=%22round%22 opacity=%220.75%22/%3E%3Cline x1=%22480%22 y1=%2230%22 x2=%22466%22 y2=%2282%22 stroke=%22%23f4f7f7%22 stroke-width=%223%22 stroke-linecap=%22round%22 opacity=%220.75%22/%3E%3Cline x1=%22526%22 y1=%2282%22 x2=%22512%22 y2=%22134%22 stroke=%22%23f4f7f7%22 stroke-width=%223%22 stroke-linecap=%22round%22 opacity=%220.75%22/%3E%3Cline x1=%22572%22 y1=%2244%22 x2=%22558%22 y2=%2296%22 stroke=%22%23f4f7f7%22 stroke-width=%223%22 stroke-linecap=%22round%22 opacity=%220.75%22/%3E%3Cline x1=%22618%22 y1=%226%22 x2=%22604%22 y2=%2258%22 stroke=%22%23f4f7f7%22 stroke-width=%223%22 stroke-linecap=%22round%22 opacity=%220.75%22/%3E%3Cline x1=%2236%22 y1=%22250%22 x2=%2224%22 y2=%22294%22 stroke=%22%23f4f7f7%22 stroke-width=%222.5%22 stroke-linecap=%22round%22 opacity=%220.6%22/%3E%3Cline x1=%2288%22 y1=%22270%22 x2=%2276%22 y2=%22314%22 stroke=%22%23f4f7f7%22 stroke-width=%222.5%22 stroke-linecap=%22round%22 opacity=%220.6%22/%3E%3Cline x1=%22140%22 y1=%22290%22 x2=%22128%22 y2=%22334%22 stroke=%22%23f4f7f7%22 stroke-width=%222.5%22 stroke-linecap=%22round%22 opacity=%220.6%22/%3E%3Cline x1=%22192%22 y1=%22230%22 x2=%22180%22 y2=%22274%22 stroke=%22%23f4f7f7%22 stroke-width=%222.5%22 stroke-linecap=%22round%22 opacity=%220.6%22/%3E%3Cline x1=%22244%22 y1=%22250%22 x2=%22232%22 y2=%22294%22 stroke=%22%23f4f7f7%22 stroke-width=%222.5%22 stroke-linecap=%22round%22 opacity=%220.6%22/%3E%3Cline x1=%22296%22 y1=%22270%22 x2=%22284%22 y2=%22314%22 stroke=%22%23f4f7f7%22 stroke-width=%222.5%22 stroke-linecap=%22round%22 opacity=%220.6%22/%3E%3Cline x1=%22348%22 y1=%22290%22 x2=%22336%22 y2=%22334%22 stroke=%22%23f4f7f7%22 stroke-width=%222.5%22 stroke-linecap=%22round%22 opacity=%220.6%22/%3E%3Cline x1=%22400%22 y1=%22230%22 x2=%22388%22 y2=%22274%22 stroke=%22%23f4f7f7%22 stroke-width=%222.5%22 stroke-linecap=%22round%22 opacity=%220.6%22/%3E%3Cline x1=%22452%22 y1=%22250%22 x2=%22440%22 y2=%22294%22 stroke=%22%23f4f7f7%22 stroke-width=%222.5%22 stroke-linecap=%22round%22 opacity=%220.6%22/%3E%3Cline x1=%22504%22 y1=%22270%22 x2=%22492%22 y2=%22314%22 stroke=%22%23f4f7f7%22 stroke-width=%222.5%22 stroke-linecap=%22round%22 opacity=%220.6%22/%3E%3Cline x1=%22556%22 y1=%22290%22 x2=%22544%22 y2=%22334%22 stroke=%22%23f4f7f7%22 stroke-width=%222.5%22 stroke-linecap=%22round%22 opacity=%220.6%22/%3E%3Cline x1=%22608%22 y1=%22230%22 x2=%22596%22 y2=%22274%22 stroke=%22%23f4f7f7%22 stroke-width=%222.5%22 stroke-linecap=%22round%22 opacity=%220.6%22/%3E%3C/svg%3E");background-size:cover;background-position:center}
+.sw-pack{background-image:url("https://images.unsplash.com/uploads/141148589884100082977/a816dbd7?auto=format&fit=crop&w=900&q=70"),url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 600 440%22%3E%3Crect width=%22600%22 height=%22440%22 fill=%22%23f1ede4%22/%3E%3Cellipse cx=%22300%22 cy=%22386%22 rx=%22130%22 ry=%2211%22 fill=%22rgba(40,35,25,0.10)%22/%3E%3Cg transform=%22rotate(0 300 270)%22%3E%0A  %3Crect x=%22214%22 y=%22142%22 width=%22172%22 height=%22222%22 rx=%2228%22 fill=%22%2379865f%22 stroke=%22%235f6c49%22 stroke-width=%222.5%22/%3E%0A  %3Cpath d=%22M214,196 L214,170 Q214,142 242,142 L358,142 Q386,142 386,170 L386,196 Q300,178 214,196 Z%22 fill=%22%2394a07b%22 stroke=%22%235f6c49%22 stroke-width=%222.5%22/%3E%0A  %3Crect x=%22248%22 y=%22240%22 width=%22104%22 height=%2286%22 rx=%2216%22 fill=%22%2394a07b%22 stroke=%22%235f6c49%22 stroke-width=%222.5%22/%3E%0A  %3Cline x1=%22258%22 y1=%22186%22 x2=%22258%22 y2=%22252%22 stroke=%22%235f6c49%22 stroke-width=%225%22/%3E%0A  %3Cline x1=%22342%22 y1=%22186%22 x2=%22342%22 y2=%22252%22 stroke=%22%235f6c49%22 stroke-width=%225%22/%3E%0A  %3Crect x=%22251%22 y=%22250%22 width=%2214%22 height=%2218%22 rx=%223%22 fill=%22%235f6c49%22/%3E%0A  %3Crect x=%22335%22 y=%22250%22 width=%2214%22 height=%2218%22 rx=%223%22 fill=%22%235f6c49%22/%3E%0A  %3Cpath d=%22M282,142 q18,-20 36,0%22 fill=%22none%22 stroke=%22%235f6c49%22 stroke-width=%226%22 stroke-linecap=%22round%22/%3E%0A%3C/g%3E%3C/svg%3E");background-size:cover;background-position:center}
+.sw-pack-out{background-image:url("https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=900&q=70"),url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 600 440%22%3E%3Crect width=%22600%22 height=%22440%22 fill=%22%23e6ece2%22/%3E%3Crect width=%22600%22 height=%22440%22 fill=%22%23e6ece2%22/%3E%3Ccircle cx=%22492%22 cy=%2292%22 r=%2236%22 fill=%22%23e9c87e%22/%3E%3Cpath d=%22M0,266 Q180,196 360,250 T600,236 L600,440 L0,440 Z%22 fill=%22%23a5b790%22/%3E%3Cpath d=%22M0,322 Q240,276 600,310 L600,440 L0,440 Z%22 fill=%22%2384996c%22/%3E%3Cellipse cx=%22302%22 cy=%22392%22 rx=%22128%22 ry=%2211%22 fill=%22rgba(40,35,25,0.10)%22/%3E%3Cg transform=%22rotate(6 300 270)%22%3E%0A  %3Crect x=%22214%22 y=%22142%22 width=%22172%22 height=%22222%22 rx=%2228%22 fill=%22%2379865f%22 stroke=%22%235f6c49%22 stroke-width=%222.5%22/%3E%0A  %3Cpath d=%22M214,196 L214,170 Q214,142 242,142 L358,142 Q386,142 386,170 L386,196 Q300,178 214,196 Z%22 fill=%22%2394a07b%22 stroke=%22%235f6c49%22 stroke-width=%222.5%22/%3E%0A  %3Crect x=%22248%22 y=%22240%22 width=%22104%22 height=%2286%22 rx=%2216%22 fill=%22%2394a07b%22 stroke=%22%235f6c49%22 stroke-width=%222.5%22/%3E%0A  %3Cline x1=%22258%22 y1=%22186%22 x2=%22258%22 y2=%22252%22 stroke=%22%235f6c49%22 stroke-width=%225%22/%3E%0A  %3Cline x1=%22342%22 y1=%22186%22 x2=%22342%22 y2=%22252%22 stroke=%22%235f6c49%22 stroke-width=%225%22/%3E%0A  %3Crect x=%22251%22 y=%22250%22 width=%2214%22 height=%2218%22 rx=%223%22 fill=%22%235f6c49%22/%3E%0A  %3Crect x=%22335%22 y=%22250%22 width=%2214%22 height=%2218%22 rx=%223%22 fill=%22%235f6c49%22/%3E%0A  %3Cpath d=%22M282,142 q18,-20 36,0%22 fill=%22none%22 stroke=%22%235f6c49%22 stroke-width=%226%22 stroke-linecap=%22round%22/%3E%0A%3C/g%3E%3C/svg%3E");background-size:cover;background-position:center}
+.sw-sock{background-image:url("https://images.unsplash.com/photo-1641399122809-e3c85958eb67?auto=format&fit=crop&w=900&q=70"),url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 600 440%22%3E%3Crect width=%22600%22 height=%22440%22 fill=%22%23f1ede4%22/%3E%3Cellipse cx=%22300%22 cy=%22388%22 rx=%22150%22 ry=%2212%22 fill=%22rgba(40,35,25,0.10)%22/%3E%3Cg transform=%22translate(180,116) rotate(-6)%22%3E%0A  %3Cpath d=%22M0,0 L78,0 L78,128 Q78,150 98,158 L150,178 Q178,189 170,216 Q161,242 132,232 L42,200 Q0,186 0,148 Z%22%0A        fill=%22%23ece6d6%22 stroke=%22rgba(40,35,25,0.18)%22 stroke-width=%222.5%22/%3E%0A  %3Crect x=%220%22 y=%220%22 width=%2278%22 height=%2214%22 fill=%22%23c89a5b%22/%3E%0A  %3Crect x=%220%22 y=%2222%22 width=%2278%22 height=%228%22 fill=%22%23c89a5b%22/%3E%0A  %3Crect x=%220%22 y=%2238%22 width=%2278%22 height=%228%22 fill=%22%232e7a5e%22/%3E%0A  %3Ccircle cx=%2276%22 cy=%22150%22 r=%2217%22 fill=%22%23c89a5b%22 opacity=%220.5%22/%3E%0A  %3Cpath d=%22M132,232 Q161,242 170,216%22 fill=%22none%22 stroke=%22%23c89a5b%22 stroke-width=%227%22/%3E%0A%3C/g%3E%3Cg transform=%22translate(312,128) rotate(7)%22%3E%0A  %3Cpath d=%22M0,0 L78,0 L78,128 Q78,150 98,158 L150,178 Q178,189 170,216 Q161,242 132,232 L42,200 Q0,186 0,148 Z%22%0A        fill=%22%23ece6d6%22 stroke=%22rgba(40,35,25,0.18)%22 stroke-width=%222.5%22/%3E%0A  %3Crect x=%220%22 y=%220%22 width=%2278%22 height=%2214%22 fill=%22%23c89a5b%22/%3E%0A  %3Crect x=%220%22 y=%2222%22 width=%2278%22 height=%228%22 fill=%22%23c89a5b%22/%3E%0A  %3Crect x=%220%22 y=%2238%22 width=%2278%22 height=%228%22 fill=%22%232e7a5e%22/%3E%0A  %3Ccircle cx=%2276%22 cy=%22150%22 r=%2217%22 fill=%22%23c89a5b%22 opacity=%220.5%22/%3E%0A  %3Cpath d=%22M132,232 Q161,242 170,216%22 fill=%22none%22 stroke=%22%23c89a5b%22 stroke-width=%227%22/%3E%0A%3C/g%3E%3C/svg%3E");background-size:cover;background-position:center}
+.sw-sock-trail{background-image:url("https://images.unsplash.com/photo-1730448111621-c0524e75b0e8?auto=format&fit=crop&w=900&q=70"),url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 600 440%22%3E%3Crect width=%22600%22 height=%22440%22 fill=%22%23e3e8df%22/%3E%3Crect width=%22600%22 height=%22440%22 fill=%22%23e3e8df%22/%3E%3Cpath d=%22M0,286 Q200,246 600,272 L600,440 L0,440 Z%22 fill=%22%239db48c%22/%3E%3Cpath d=%22M0,352 Q280,318 600,344 L600,440 L0,440 Z%22 fill=%22%237b9468%22/%3E%3Cpath d=%22M40,308 q5,-22 10,0%22 fill=%22none%22 stroke=%22%235f7a4d%22 stroke-width=%223%22/%3E%3Cpath d=%22M112,308 q5,-22 10,0%22 fill=%22none%22 stroke=%22%235f7a4d%22 stroke-width=%223%22/%3E%3Cpath d=%22M184,308 q5,-22 10,0%22 fill=%22none%22 stroke=%22%235f7a4d%22 stroke-width=%223%22/%3E%3Cpath d=%22M256,308 q5,-22 10,0%22 fill=%22none%22 stroke=%22%235f7a4d%22 stroke-width=%223%22/%3E%3Cpath d=%22M328,308 q5,-22 10,0%22 fill=%22none%22 stroke=%22%235f7a4d%22 stroke-width=%223%22/%3E%3Cpath d=%22M400,308 q5,-22 10,0%22 fill=%22none%22 stroke=%22%235f7a4d%22 stroke-width=%223%22/%3E%3Cpath d=%22M472,308 q5,-22 10,0%22 fill=%22none%22 stroke=%22%235f7a4d%22 stroke-width=%223%22/%3E%3Cpath d=%22M544,308 q5,-22 10,0%22 fill=%22none%22 stroke=%22%235f7a4d%22 stroke-width=%223%22/%3E%3Cellipse cx=%22300%22 cy=%22400%22 rx=%22150%22 ry=%2211%22 fill=%22rgba(40,35,25,0.10)%22/%3E%3Cg transform=%22translate(186,128) rotate(-6)%22%3E%0A  %3Cpath d=%22M0,0 L78,0 L78,128 Q78,150 98,158 L150,178 Q178,189 170,216 Q161,242 132,232 L42,200 Q0,186 0,148 Z%22%0A        fill=%22%23ece6d6%22 stroke=%22rgba(40,35,25,0.18)%22 stroke-width=%222.5%22/%3E%0A  %3Crect x=%220%22 y=%220%22 width=%2278%22 height=%2214%22 fill=%22%23c89a5b%22/%3E%0A  %3Crect x=%220%22 y=%2222%22 width=%2278%22 height=%228%22 fill=%22%23c89a5b%22/%3E%0A  %3Crect x=%220%22 y=%2238%22 width=%2278%22 height=%228%22 fill=%22%232e7a5e%22/%3E%0A  %3Ccircle cx=%2276%22 cy=%22150%22 r=%2217%22 fill=%22%23c89a5b%22 opacity=%220.5%22/%3E%0A  %3Cpath d=%22M132,232 Q161,242 170,216%22 fill=%22none%22 stroke=%22%23c89a5b%22 stroke-width=%227%22/%3E%0A%3C/g%3E%3Cg transform=%22translate(318,140) rotate(7)%22%3E%0A  %3Cpath d=%22M0,0 L78,0 L78,128 Q78,150 98,158 L150,178 Q178,189 170,216 Q161,242 132,232 L42,200 Q0,186 0,148 Z%22%0A        fill=%22%23ece6d6%22 stroke=%22rgba(40,35,25,0.18)%22 stroke-width=%222.5%22/%3E%0A  %3Crect x=%220%22 y=%220%22 width=%2278%22 height=%2214%22 fill=%22%23c89a5b%22/%3E%0A  %3Crect x=%220%22 y=%2222%22 width=%2278%22 height=%228%22 fill=%22%23c89a5b%22/%3E%0A  %3Crect x=%220%22 y=%2238%22 width=%2278%22 height=%228%22 fill=%22%232e7a5e%22/%3E%0A  %3Ccircle cx=%2276%22 cy=%22150%22 r=%2217%22 fill=%22%23c89a5b%22 opacity=%220.5%22/%3E%0A  %3Cpath d=%22M132,232 Q161,242 170,216%22 fill=%22none%22 stroke=%22%23c89a5b%22 stroke-width=%227%22/%3E%0A%3C/g%3E%3C/svg%3E");background-size:cover;background-position:center}
+
+/* perception sweep — jade light passes over the page when Sapient engages */
+.sweepbar{position:fixed; top:0; bottom:0; width:42vw; left:-50vw; z-index:40; pointer-events:none;
+  background:linear-gradient(100deg,transparent,rgba(29,158,117,.28) 35%,rgba(29,158,117,.10) 60%,transparent);
+  animation:sweepgo .9s cubic-bezier(.4,0,.2,1) both}
+@keyframes sweepgo{from{left:-50vw} to{left:105vw}}
+body[data-sap="on"] .pgrid .pcard:nth-child(2){animation-delay:.06s}
+body[data-sap="on"] .pgrid .pcard:nth-child(3){animation-delay:.12s}
+body[data-sap="on"] .pgrid .pcard:nth-child(4){animation-delay:.18s}
+body[data-sap="on"] .pgrid .pcard:nth-child(5){animation-delay:.24s}
+body[data-sap="on"] .pgrid .pcard:nth-child(6){animation-delay:.30s}
+body[data-sap="on"] .pgrid .pcard:nth-child(7){animation-delay:.36s}
+body[data-sap="on"] .pgrid .pcard:nth-child(8){animation-delay:.42s}
+.pdp{animation:tilein .45s both}
+body[data-sap="on"] .pdp{animation:tilein .55s .15s both}
+
+/* inspector */
+body[data-sap="on"][data-insp="on"] [data-insp]{outline:1.5px dashed var(--jade); outline-offset:4px}
+body[data-sap="on"][data-insp="on"] [data-insp]::before{content:attr(data-insp); position:absolute; top:-9px; left:10px; font-size:10px; font-weight:600; letter-spacing:.05em; background:#0d2b21; color:#7fe0bd; padding:3px 9px; border-radius:12px; z-index:6; font-family:'Karla'; line-height:1.4; max-width:88%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+[data-insp]{position:relative}
+
+/* demo control bar */
+#demobar{position:fixed; left:50%; bottom:18px; transform:translateX(-50%); z-index:50; display:flex; align-items:center; gap:14px; background:var(--bar); color:#e8e5da; padding:10px 14px; border-radius:50px; box-shadow:0 14px 40px rgba(20,19,15,.35); font-size:12.5px; flex-wrap:wrap; justify-content:center; max-width:calc(100vw - 24px)}
+#demobar .dlab{font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:#8d897c}
+.useg{display:flex; gap:4px; background:rgba(255,255,255,.07); padding:4px; border-radius:30px}
+.useg button{font-size:12px; font-weight:600; padding:6px 13px; border-radius:22px; border:none; background:transparent; color:#a8a496}
+.useg button.on{background:#f4f2ec; color:var(--bar)}
+.swtch{position:relative; width:44px; height:24px; border-radius:14px; background:rgba(255,255,255,.14); border:none; transition:background .25s}
+.swtch i{position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background:#f4f2ec; transition:transform .25s; font-style:normal}
+body[data-sap="on"] .swtch{background:#1d9e75}
+body[data-sap="on"] .swtch i{transform:translateX(20px)}
+.ibtn{font-size:12px; font-weight:600; padding:7px 14px; border-radius:22px; border:1px solid rgba(255,255,255,.2); background:transparent; color:#a8a496}
+body[data-insp="on"] .ibtn{background:#1d9e75; border-color:#1d9e75; color:#08130e}
+#dstatus{font-family:ui-monospace,Menlo,monospace; font-size:11px; color:#8d897c; min-width:150px}
+#dstatus.busy{color:#d4a94e}
+#dstatus.live{color:#5ad3a4}
+
+/* toast */
+#toast{position:fixed; left:50%; bottom:84px; transform:translateX(-50%) translateY(16px); background:var(--ink); color:#f4f2ec; font-size:13px; padding:11px 22px; border-radius:30px; opacity:0; pointer-events:none; transition:opacity .3s, transform .3s; z-index:60}
+#toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
+
+footer{border-top:1px solid var(--line); margin-top:30px; padding:30px 0 40px; color:var(--soft); font-size:12.5px; line-height:1.7}
+
+@media (max-width:860px){
+  .pgrid{grid-template-columns:repeat(2,1fr)}
+  .hero{grid-template-columns:1fr}
+  .hero .hart{min-height:200px; order:-1}
+  .hero .ht{padding:30px 0}
+  .pdp{grid-template-columns:1fr}
+  nav{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important; transition-duration:.01ms !important}
+}
+</style>
+</head>
+<body data-sap="off" data-user="maya" data-insp="off">
+
+<div id="announce">Free shipping over $75 · Easy 30-day returns</div>
+<header>
+  <div class="wrap hrow">
+    <a class="logo" href="#/">Maren &amp; Co</a>
+    <nav id="nav">
+      <a href="#/" data-nav="home">Home</a>
+      <a href="#/c/fibers" data-nav="fibers">Natural fibers</a>
+      <a href="#/c/rain" data-nav="rain">Rain ready</a>
+      <a href="#/c/best" data-nav="best">Best sellers</a>
+    </nav>
+    <button class="cartbtn" onclick="toast('Cart is a demo — but it counts!')">Cart · <b id="cartn">0</b></button>
+  </div>
+</header>
+
+<main id="app" class="wrap"></main>
+
+<footer><div class="wrap">
+  Maren &amp; Co is a fictional storefront built as a live demo of persona-conditioned commerce.
+  Every personalized element is produced by a mock Sapient perception engine running in this page —
+  toggle it in the bar below, switch shoppers, and press inspect to see each decision it made.
+</div></footer>
+
+<div id="demobar">
+  <span class="dlab">Shopper</span>
+  <div class="useg" id="useg">
+    <button data-u="maya" class="on">Maya</button>
+    <button data-u="dev">Dev</button>
+    <button data-u="guest">Guest</button>
+  </div>
+  <span class="dlab">Sapient</span>
+  <button class="swtch" id="sapsw" aria-label="Toggle Sapient"><i></i></button>
+  <button class="ibtn" id="inspbtn">Inspect</button>
+  <span id="dstatus">engine idle</span>
+</div>
+<div id="toast"></div>
+
+<script>
+/* ───────────────────────── mock data ───────────────────────── */
+const CATALOG = {
+  overshirt: { name:'Linen overshirt', price:89, cat:'Apparel', isNew:true, sizes:['S','M','L','XL'], rating:'★★★★☆', rcount:'4.5 · 64 reviews',
+    shots:{ studio:{label:'Studio shot', art:'sw-linen', tags:{minimal:.6,neutral:.7}},
+            closeup:{label:'Fabric close-up', art:'sw-linen-close', tags:{texture:.95,minimal:.85,neutral:.8}},
+            onmodel:{label:'On-model styled', art:'sw-linen-model', tags:{color:.6,trend:.7,minimal:.4}} },
+    copy:{ default:'A relaxed overshirt in European flax linen. Wear open over a tee or buttoned as a shirt.',
+           texture:'European flax with a dry, slubby hand-feel that softens every wash — no sheen, no static. Cut relaxed; your usual size holds.',
+           action:'Hard-wearing flax that shrugs off creases — layer it over anything and forget about it.' },
+    reviews:[ {s:'★★★★★', t:'The fabric photographs honestly — it feels exactly like it looks.', w:'Priya V.', tag:'texture'},
+              {s:'★★★★☆', t:'Took it travelling for two weeks, zero complaints.', w:'Sam K.', tag:'action'},
+              {s:'★★★★★', t:'True to size, boxy in the right way.', w:'Elena R.', tag:'texture'} ] },
+  knit: { name:'Merino crew knit', price:98, cat:'Apparel', isNew:false, sizes:['S','M','L','XL'], rating:'★★★★☆', rcount:'4.2 · 318 reviews',
+    shots:{ studio:{label:'Studio shot', art:'sw-knit', tags:{neutral:.5,minimal:.4,utility:.3}},
+            detail:{label:'Knit detail', art:'sw-knit-close', tags:{texture:.85,minimal:.6,neutral:.7,classic:.5}} },
+    copy:{ default:'Crew knit. 100% merino wool. Available in 4 colors. Machine wash cold.',
+           texture:'Mid-weight 19.5-micron merino with a dry, matte hand-feel — no itch, no sheen. Runs true to size: your usual M holds.',
+           action:'Merino that breathes on the move and never smells — wear it three days straight, we won\u2019t tell.' },
+    reviews:[ {s:'★★★★★', t:'Softest hand-feel of any merino I own — zero itch at the collar.', w:'Dana M.', tag:'texture'},
+              {s:'★★★★☆', t:'Wore it on a cold trail morning under a shell, perfect base layer.', w:'Marcus T.', tag:'action'},
+              {s:'★★★★☆', t:'Color exactly as pictured.', w:'Jo W.', tag:'default'} ] },
+  trouser: { name:'Linen wide trouser', price:112, cat:'Apparel', isNew:true, sizes:['26','28','30','32'], rating:'★★★★★', rcount:'4.8 · 21 reviews',
+    shots:{ studio:{label:'Studio shot', art:'sw-trouser', tags:{minimal:.5,neutral:.6}},
+            drape:{label:'Drape detail', art:'sw-trouser-drape', tags:{texture:.85,minimal:.8,neutral:.7}} },
+    copy:{ default:'A wide-leg trouser in mid-weight linen with a clean front.',
+           texture:'Mid-weight linen with real drape — falls straight, never clings. High rise, honest waistband.',
+           action:'Loose, airy, indestructible. The trouser equivalent of a deep breath.' },
+    reviews:[ {s:'★★★★★', t:'The drape is exactly what the close-up promised.', w:'Ines L.', tag:'texture'},
+              {s:'★★★★★', t:'Bought a second pair within a week.', w:'Ana P.', tag:'default'} ] },
+  tote: { name:'Weekend tote', price:65, cat:'Bags', isNew:false, sizes:['One size'], rating:'★★★★☆', rcount:'4.4 · 190 reviews',
+    shots:{ studio:{label:'Studio shot', art:'sw-tote', tags:{neutral:.5,utility:.4}},
+            flatlay:{label:'Flat-lay', art:'sw-tote-flat', tags:{neutral:.6,minimal:.5,color:.5,utility:.4}} },
+    copy:{ default:'A roomy everyday tote in waxed canvas with an internal zip pocket.',
+           texture:'Waxed canvas that patinas beautifully — structured enough to stand on its own.',
+           action:'Fits a 16-inch laptop, a rain shell, and the farmers-market haul. Built to be overfilled.' },
+    reviews:[ {s:'★★★★☆', t:'Carries more than it should.', w:'Ravi D.', tag:'action'},
+              {s:'★★★★★', t:'The canvas feels premium in person.', w:'Mia C.', tag:'texture'} ] },
+  shoe: { name:'Trail runner 2.0', price:129, cat:'Footwear', isNew:false, sizes:['9','10','10.5','11'], rating:'★★★★★', rcount:'4.7 · 412 reviews',
+    shots:{ studio:{label:'Studio shot', art:'sw-shoe', tags:{utility:.5,neutral:.4}},
+            action:{label:'In motion on trail', art:'sw-shoe-action', tags:{action:.95,outdoor:.85,utility:.7}} },
+    copy:{ default:'Our flagship trail runner with a grippy outsole and breathable upper.',
+           texture:'Engineered knit upper with a soft, sock-like collar — trail capability without the plastic feel.',
+           action:'5 mm lugs and a sticky-rubber outsole built for wet roots and loose descent. Drains fast — rain won\u2019t mind.' },
+    reviews:[ {s:'★★★★★', t:'Grip on wet rock is genuinely absurd. Confidence-inspiring.', w:'Theo B.', tag:'action'},
+              {s:'★★★★★', t:'Held up through a muddy 50k.', w:'Lena F.', tag:'action'},
+              {s:'★★★★☆', t:'Comfortable straight out of the box.', w:'Omar H.', tag:'default'} ] },
+  rain: { name:'Matte rain shell', price:149, cat:'Apparel', isNew:true, sizes:['S','M','L','XL'], rating:'★★★★★', rcount:'4.6 · 38 reviews',
+    shots:{ studio:{label:'Studio shot', art:'sw-rain', tags:{utility:.5,minimal:.4}},
+            worn:{label:'Storm-shell close-up', art:'sw-rain-worn', tags:{utility:.85,outdoor:.9,action:.5,minimal:.3,texture:.2}} },
+    copy:{ default:'A 2.5-layer waterproof shell with a clean matte finish.',
+           texture:'Matte-finish waterproof fabric with a quiet, paper-dry hand — technical without looking technical.',
+           action:'10k/10k waterproof-breathable with pit zips and a helmet-ready hood. Packs into its own pocket.' },
+    reviews:[ {s:'★★★★★', t:'Kept me dry through a four-hour storm ridge.', w:'Kai N.', tag:'action'},
+              {s:'★★★★☆', t:'Finally a shell that doesn\u2019t rustle.', w:'June S.', tag:'texture'} ] },
+  pack: { name:'Canvas day pack', price:74, cat:'Bags', isNew:false, sizes:['One size'], rating:'★★★★☆', rcount:'4.3 · 156 reviews',
+    shots:{ studio:{label:'Studio shot', art:'sw-pack', tags:{utility:.5,neutral:.4}},
+            outdoor:{label:'Outdoor scene', art:'sw-pack-out', tags:{outdoor:.7,utility:.6,action:.3,neutral:.4,classic:.3}} },
+    copy:{ default:'A 20L canvas day pack with leather pulls and a padded sleeve.',
+           texture:'Heavy canvas and vegetable-tanned leather that wear in, not out.',
+           action:'20L, bombproof, water-resistant base — daypack on Saturday, commuter on Monday.' },
+    reviews:[ {s:'★★★★☆', t:'Survived a season of scrambles.', w:'Nico A.', tag:'action'},
+              {s:'★★★★★', t:'The canvas weight feels serious.', w:'Hana Y.', tag:'texture'} ] },
+  sock: { name:'Alpine wool sock · 3-pack', price:28, cat:'Accessories', isNew:false, sizes:['M','L'], rating:'★★★★★', rcount:'4.9 · 502 reviews',
+    shots:{ studio:{label:'Studio shot', art:'sw-sock', tags:{neutral:.5,classic:.4}},
+            trail:{label:'On trail', art:'sw-sock-trail', tags:{outdoor:.7,action:.6,utility:.6}} },
+    copy:{ default:'Cushioned merino-blend socks in a three-pack.',
+           texture:'Dense merino terry underfoot, smooth knit on top — the pair you reach for first.',
+           action:'Cushioned where trails punish, ventilated where feet steam. Three pairs, zero blisters.' },
+    reviews:[ {s:'★★★★★', t:'No hotspots after 20 miles.', w:'Belle R.', tag:'action'},
+              {s:'★★★★★', t:'Softer than socks twice the price.', w:'Greg P.', tag:'texture'} ] }
+};
+
+const USERS = {
+  maya: { name:'Maya', who:'minimalist · fabric-led · fit-cautious', copyKey:'texture', fitRisk:.8,
+    traits:{texture:.95,minimal:.9,neutral:.8,classic:.4,action:.05,utility:.2,outdoor:.1,color:.15,trend:.3},
+    announce:'New in natural fibers — picked for the way you shop',
+    hero:{eyebrow:'Chosen for you', title:'Texture you can trust', sub:'Natural fibers, photographed honestly — close enough to feel.', cta:'Shop natural fibers', link:'#/c/fibers', art:'sw-linen-close'},
+    fitnote:'Runs true to size — based on your history, M holds.' },
+  dev: { name:'Dev', who:'trail runner · action-led · weekend buyer', copyKey:'action', fitRisk:.2,
+    traits:{action:.95,outdoor:.9,utility:.9,texture:.2,minimal:.3,neutral:.3,classic:.2,color:.4,trend:.35},
+    announce:"Rain on Saturday's forecast — gear that's ready for it",
+    hero:{eyebrow:'Heads up for the weekend', title:'Rain\u2019s coming Saturday', sub:'Trail-tested gear, shown the way you\u2019ll use it.', cta:'Shop rain-ready', link:'#/c/rain', art:'sw-shoe-action'},
+    fitnote:'You usually take a 10.5 — in stock.' },
+  guest: { name:'Guest', who:'new visitor · learning this session', copyKey:'default', fitRisk:.4, learning:true,
+    traits:{texture:.3,minimal:.3,neutral:.3,classic:.3,action:.3,utility:.3,outdoor:.3,color:.3,trend:.3},
+    announce:'Welcome — this store adapts as you browse',
+    hero:{eyebrow:'New here', title:'A store that learns your taste', sub:'Browse anything — each view tunes what we show next.', cta:'Start with best sellers', link:'#/c/best', art:'sw-tote-flat'},
+    fitnote:'' }
+};
+
+const COLLECTIONS = {
+  fibers:{ title:'Natural fibers', desc:'Linen, merino, and canvas — materials with an honest hand-feel.', skus:['overshirt','knit','trouser','tote'] },
+  rain:{ title:'Rain ready', desc:'Waterproof, grippy, and quick-draining — built for a wet forecast.', skus:['rain','shoe','sock','pack'] },
+  best:{ title:'Best sellers', desc:'What everyone is buying right now.', skus:['shoe','tote','knit','overshirt','rain','pack','trouser','sock'] }
+};
+
+const DEFAULT_ORDER = ['shoe','tote','knit','overshirt','rain','pack','trouser','sock'];
+const DEFAULT_ANNOUNCE = 'Free shipping over $75 · Easy 30-day returns';
+const DEFAULT_HERO = {eyebrow:'The summer edit', title:'Considered goods, season after season', sub:'Best sellers and new arrivals — the same edit for every visitor.', cta:'Shop best sellers', link:'#/c/best', art:'sw-knit'};
+</script>
+<script>
+/* ───────────────────── mock perception engine ─────────────────────
+   Same contract as the repo's server: persona traits × shot tags.
+   Swap-for-real: replace engineScore() with SapientClient.score(). */
+const cache = new Map();
+
+function matchScore(traits, tags){
+  let num=0, den=0;
+  for (const [k,w] of Object.entries(tags)){ num += (traits[k]||0)*w; den += w; }
+  return den ? num/den : 0;
+}
+function bestShot(traits, sku){
+  let best=null;
+  for (const [sid,s] of Object.entries(CATALOG[sku].shots)){
+    const raw = matchScore(traits, s.tags);
+    if (!best || raw>best.raw) best={sid, raw, label:s.label, art:s.art};
+  }
+  return best;
+}
+function engineScore(userId, skus){
+  const u = USERS[userId];
+  const key = userId+'|'+JSON.stringify(u.traits)+'|'+skus.join(',');
+  if (cache.has(key)) return Promise.resolve({cached:true, ms:1, results:cache.get(key)});
+  const t0 = performance.now();
+  const lat = 120 + Math.random()*60;
+  return new Promise(res=>setTimeout(()=>{
+    const results = skus.map(sku=>{
+      const b = bestShot(u.traits, sku);
+      return { sku, shot:b.sid, label:b.label, art:b.art,
+        appeal: Math.round(55+42*b.raw),
+        keep: Math.round((0.55+0.4*b.raw)*100)/100,
+        swapped: b.sid!=='studio' };
+    }).sort((a,b)=>b.appeal-a.appeal);
+    cache.set(key, results);
+    res({cached:false, ms:Math.round(performance.now()-t0), results});
+  }, lat));
+}
+function learnFrom(sku){ // guest persona update on product view
+  const g = USERS.guest;
+  const shots = Object.values(CATALOG[sku].shots);
+  const blend = {};
+  shots.forEach(s=>{ for(const [k,v] of Object.entries(s.tags)) blend[k]=Math.max(blend[k]||0,v); });
+  for (const k of Object.keys(g.traits)) g.traits[k] = Math.round((g.traits[k]*0.55 + (blend[k]||0.1)*0.45)*100)/100;
+  cache.clear();
+}
+</script>
+<script>
+/* ───────────────────────── store app ───────────────────────── */
+let userId='maya', sap=false, insp=false, cart=0;
+
+const $=s=>document.querySelector(s);
+const app=$('#app');
+
+function toast(msg){
+  const t=$('#toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),2200);
+}
+function status(cls,txt){ const d=$('#dstatus'); d.className=cls; d.textContent=txt; }
+
+function tile(sku, r){ // r = sapient result or null
+  const p=CATALOG[sku];
+  const art = r ? r.art : p.shots.studio.art;
+  const shot = r ? r.label : p.shots.studio.label;
+  const ins = r ? ` data-insp="appeal ${r.appeal}${r.swapped?' · shot swapped':''}"` : '';
+  return `<a class="pcard" href="#/p/${sku}"${ins}>
+    ${p.isNew?'<span class="bnew">New</span>':''}
+    <div class="pimgbox"><div class="fill ${art}"></div></div>
+    <div class="ptx"><div class="nm">${p.name}</div><div class="shot">${shot}</div><div class="pr">$${p.price}</div></div>
+  </a>`;
+}
+
+async function orderedTiles(skus){
+  if (!sap) return skus.map(s=>tile(s,null)).join('');
+  status('busy', `scoring ${skus.length} assets…`);
+  const out = await engineScore(userId, skus);
+  status('live', `${skus.length} assets · ${out.ms} ms · ${out.cached?'cached':'live'}`);
+  return out.results.map(r=>tile(r.sku,r)).join('');
+}
+
+async function renderHome(){
+  const u=USERS[userId];
+  const h = sap ? u.hero : DEFAULT_HERO;
+  const heroIns = sap ? ` data-insp="world model: ${u.learning?'cold start — session learning':'context banner'}"` : '';
+  app.innerHTML = `
+  <section class="hero"${heroIns}>
+    <div class="ht">
+      <div class="eyebrow">${h.eyebrow}</div>
+      <h1>${h.title}</h1>
+      <p>${h.sub}</p>
+      <a class="cta" href="${h.link}">${h.cta}</a>
+    </div>
+    <div class="hart"><div class="fill ${h.art}"></div></div>
+  </section>
+  <section class="sect">
+    <div class="shead"><h2>${sap?`Picked for ${u.name}`:'Featured'}</h2><a href="#/c/best">View all →</a></div>
+    <div class="pgrid" id="homegrid">${DEFAULT_ORDER.map(s=>tile(s,null)).join('')}</div>
+  </section>`;
+  if (sap) $('#homegrid').innerHTML = await orderedTiles(DEFAULT_ORDER);
+}
+
+async function renderColl(id){
+  const c=COLLECTIONS[id]; if(!c) return renderHome();
+  const u=USERS[userId];
+  app.innerHTML = `
+  <section class="collhead">
+    <div class="eyebrow">Collection</div>
+    <h1>${c.title}</h1>
+    <p>${sap?`Ranked by predicted reaction for ${u.name}.`:c.desc}</p>
+  </section>
+  <div class="pgrid" id="collgrid">${c.skus.map(s=>tile(s,null)).join('')}</div>`;
+  if (sap) $('#collgrid').innerHTML = await orderedTiles(c.skus);
+}
+
+async function renderPDP(sku){
+  const p=CATALOG[sku]; if(!p) return renderHome();
+  const u=USERS[userId];
+  let main = {sid:'studio', label:p.shots.studio.label, art:p.shots.studio.art};
+  let keep=null, ms=null, cached=false;
+
+  if (sap){
+    status('busy','scoring 1 asset…');
+    const out = await engineScore(userId,[sku]);
+    const r = out.results[0];
+    main = {sid:r.shot, label:r.label, art:r.art};
+    keep=r.keep; ms=out.ms; cached=out.cached;
+  }
+  const copy = sap ? (p.copy[u.copyKey]||p.copy.default) : p.copy.default;
+  const revs = sap
+    ? [...p.reviews].sort((a,b)=>(b.tag===u.copyKey)-(a.tag===u.copyKey))
+    : p.reviews;
+  const rnote = sap && revs[0].tag===u.copyKey ? `reviews mentioning what ${u.name} cares about, first` : 'newest first';
+
+  // cross-sell: sapient = top-scored other sku; default = fixed co-purchase
+  let xsku = sku==='tote' ? 'pack' : 'tote', xwhy='Bought together often', xr=null;
+  if (sap){
+    const others = Object.keys(CATALOG).filter(s=>s!==sku);
+    const out2 = await engineScore(userId, others);
+    xr = out2.results[0]; xsku = xr.sku; xwhy = `Predicted taste match · appeal ${xr.appeal}`;
+  }
+  const xp = CATALOG[xsku];
+
+  app.innerHTML = `
+  <div class="pdp">
+    <div class="gal">
+      <div class="main" ${sap?`data-insp="shot picked: ${main.label.toLowerCase()}"`:''}>
+        <div class="fill ${main.art}" id="mainart"></div>
+        <span class="shotlbl" id="mainlbl">${main.label}</span>
+      </div>
+      <div class="thumbs">${Object.entries(p.shots).map(([sid,s])=>
+        `<button class="thumb ${sid===main.sid?'cur':''}" onclick="swapShot('${sku}','${sid}',this)" aria-label="${s.label}"><span class="fill ${s.art}"></span></button>`).join('')}
+      </div>
+    </div>
+    <div class="binfo">
+      <div class="bc"><a href="#/">Home</a> / ${p.cat}</div>
+      <h1>${p.name}</h1>
+      <div class="pr">$${p.price}</div>
+      <div class="rating">${p.rating}<span>${p.rcount}</span></div>
+      <p class="pcopy" ${sap?`data-insp="copy variant: ${u.copyKey}"`:''}>${copy}</p>
+      <div class="szlab">Size</div>
+      <div class="sizes">${p.sizes.map((s,i)=>`<button class="sz ${sap&&i===1?'on':''}">${s}</button>`).join('')}</div>
+      <button class="add" onclick="addCart('${p.name}')">Add to cart${keep?` — predicted keep ${Math.round(keep*100)}%`:''}</button>
+      ${sap&&u.fitnote?`<div class="fitnote" data-insp="fit memory">${u.fitnote}</div>`:''}
+      <div class="reviews" ${sap?`data-insp="re-sorted: ${u.copyKey}"`:''}>
+        <h3>Reviews · ${rnote}</h3>
+        ${revs.map(r=>`<div class="rev"><div class="rs">${r.s}</div><p>"${r.t}"</p><div class="who">${r.w}</div></div>`).join('')}
+      </div>
+      <div class="xsell" ${sap?`data-insp="cross-sell: by predicted taste"`:''}>
+        <h3>${sap?'Pairs with — by predicted taste':'You may also like'}</h3>
+        <a class="xrow" href="#/p/${xsku}">
+          <span class="xi"><span class="fill ${xr?xr.art:xp.shots.studio.art}"></span></span>
+          <span><span class="xn">${xp.name}</span><br><span class="xs">${xwhy}</span></span>
+          <span class="xp">$${xp.price}</span>
+        </a>
+      </div>
+    </div>
+  </div>`;
+  if (sap) status('live', `2 calls · ${ms} ms · ${cached?'cached':'live'}`);
+
+  if (sap && u.learning){
+    learnFrom(sku);
+    toast('Sapient: guest persona updated from this view');
+  }
+}
+
+function swapShot(sku, sid, btn){
+  const s = CATALOG[sku].shots[sid];
+  $('#mainart').className = 'fill ' + s.art;
+  $('#mainlbl').textContent = s.label;
+  document.querySelectorAll('.thumb').forEach(t=>t.classList.remove('cur'));
+  btn.classList.add('cur');
+}
+function addCart(name){ cart++; $('#cartn').textContent=cart; toast(name+' added to cart'); }
+
+/* router */
+function route(){
+  const h = location.hash || '#/';
+  document.querySelectorAll('#nav a').forEach(a=>a.classList.remove('cur'));
+  if (h.startsWith('#/p/')) { renderPDP(h.slice(4)); }
+  else if (h.startsWith('#/c/')) {
+    const id=h.slice(4); renderColl(id);
+    const link=document.querySelector(`#nav a[data-nav="${id}"]`); if(link) link.classList.add('cur');
+  }
+  else { renderHome(); const link=document.querySelector('#nav a[data-nav="home"]'); if(link) link.classList.add('cur'); }
+  window.scrollTo({top:0});
+}
+window.addEventListener('hashchange', route);
+
+/* demo bar */
+function applyChrome(){
+  document.body.dataset.sap = sap?'on':'off';
+  document.body.dataset.user = userId;
+  document.body.dataset.insp = insp?'on':'off';
+  $('#announce').textContent = sap ? USERS[userId].announce : DEFAULT_ANNOUNCE;
+  if (!sap) status('', 'engine idle');
+}
+function sweep(){
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var s = document.createElement('div');
+  s.className = 'sweepbar';
+  s.addEventListener('animationend', function(){ s.remove(); });
+  document.body.appendChild(s);
+}
+$('#useg').addEventListener('click', e=>{
+  const b=e.target.closest('button[data-u]'); if(!b) return;
+  userId=b.dataset.u;
+  document.querySelectorAll('#useg button').forEach(x=>x.classList.toggle('on',x===b));
+  if (sap) sweep();
+  applyChrome(); route();
+  toast('Now browsing as '+USERS[userId].name);
+});
+$('#sapsw').addEventListener('click', ()=>{ sap=!sap; if(sap) sweep(); applyChrome(); route(); toast(sap?'Sapient personalization ON':'Sapient OFF — default store'); });
+$('#inspbtn').addEventListener('click', ()=>{ insp=!insp; document.body.dataset.insp=insp?'on':'off'; toast(insp?'Inspector on — Sapient decisions outlined':'Inspector off'); });
+
+applyChrome(); route();
+</script>
+</body>
+</html>
