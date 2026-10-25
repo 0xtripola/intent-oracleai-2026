@@ -34,3 +34,14 @@ Daily chart trends and persona breakdowns are illustrative. No confidence interv
 - `tests/model.test.mjs`: calculation, low-confidence fallback, recent-evidence adaptation and combined product filtering checks.
 
 Google Fonts and Unsplash product imagery require internet access. Typography has local fallbacks. Product names, details, prices, reviews, stock, delivery statements and store policies are fictional demo content. The heuristic confidence score is not a calibrated probability. Gift recipient and occasion selections change recommendation ranking; delivery windows filter the catalog using simulated delivery times. All recommendations use transparent deterministic rules, not a production machine-learning model.
+
+
+## AI storefront product chat
+
+The storefront includes an Ask AI button. Requests go to `/api/chat` on the server; the OpenAI API key is never included in frontend HTML or JavaScript.
+
+Local setup: copy `.env.example` to `.env.local`, replace the placeholder with your actual key, and run `npm run dev`. **Never commit `.env.local`** (it is gitignored).
+
+Vercel: set `OPENAI_API_KEY` in Project Settings → Environment Variables (Production and Preview as appropriate), optionally `OPENAI_MODEL`, and redeploy. Deploy the entire project including the root `api/` directory, `chat-handler.mjs`, and `public/` directory. Do not put `.env.local` or any secret in `public/`.
+
+The AI answers general product questions, but the catalog is fictional and the model cannot verify live stock, exact sizing, or shipping policies. API usage incurs charges.

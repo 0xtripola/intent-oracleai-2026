@@ -205,6 +205,12 @@ footer{border-top:1px solid var(--line); margin-top:30px; padding:30px 0 40px; c
   *,*::before,*::after{animation-duration:.01ms !important; transition-duration:.01ms !important}
 }
 </style>
+<style>
+#ai-chat-open{position:fixed;right:20px;bottom:94px;z-index:60;background:#123d2f;color:white;border:0;border-radius:40px;padding:13px 20px;box-shadow:0 8px 25px #0002;font-size:14px}
+#ai-chat-panel{position:fixed;right:20px;bottom:148px;width:min(370px,calc(100vw - 30px));height:min(510px,calc(100dvh - 190px));z-index:61;background:#fff;border:1px solid #ddd8cd;border-radius:17px;box-shadow:0 15px 45px #0003;display:none;flex-direction:column;overflow:hidden;font-family:Karla,system-ui,sans-serif}
+#ai-chat-panel.open{display:flex}#ai-chat-head{padding:14px 17px;background:#123d2f;color:white;display:flex;align-items:center;justify-content:space-between}#ai-chat-head button{background:none;border:0;color:white;font-size:22px}#ai-chat-messages{flex:1;overflow:auto;padding:15px;display:flex;flex-direction:column;gap:10px} .ai-bubble{padding:10px 12px;border-radius:13px;max-width:90%;white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;line-height:1.5;background:#f2f1ed;align-self:flex-start}.ai-bubble.mine{background:#e3f2e9;align-self:flex-end}#ai-chat-form{display:flex;gap:7px;padding:12px;border-top:1px solid #eee}#ai-chat-input{flex:1;min-width:0;border:1px solid #d8d3c6;border-radius:9px;padding:10px;font:inherit;font-size:13px}#ai-chat-form button{background:#123d2f;color:white;border:0;border-radius:9px;padding:0 13px}#ai-chat-form button:disabled{opacity:.55}
+@media(max-width:600px){#ai-chat-open{bottom:106px;right:12px}#ai-chat-panel{right:10px;bottom:155px;height:min(460px,calc(100dvh - 175px))}}
+</style>
 </head>
 <body data-sap="off" data-user="maya" data-insp="off">
 
@@ -579,6 +585,31 @@ $('#sapsw').addEventListener('click', ()=>{ sap=!sap; if(sap) sweep(); applyChro
 $('#inspbtn').addEventListener('click', ()=>{ insp=!insp; document.body.dataset.insp=insp?'on':'off'; toast(insp?'Inspector on — Sapient decisions outlined':'Inspector off'); });
 
 applyChrome(); route();
+</script>
+<button id="ai-chat-open" type="button" aria-expanded="false" aria-controls="ai-chat-panel">✦ Ask AI about products</button>
+<section id="ai-chat-panel" role="dialog" aria-label="Product assistant" aria-hidden="true">
+  <div id="ai-chat-head"><strong>Maren &amp; Co · Product assistant</strong><button id="ai-chat-close" type="button" aria-label="Close chat">×</button></div>
+  <div id="ai-chat-messages" role="log" aria-live="polite"><div class="ai-bubble">Hi! Ask me about products, styling, or choosing the right item. This is a demo assistant.</div></div>
+  <form id="ai-chat-form"><input id="ai-chat-input" type="text" maxlength="1500" autocomplete="off" placeholder="Ask about a product…" aria-label="Message" required><button type="submit">Send</button></form>
+</section>
+<script>
+(()=>{
+ const open=document.getElementById('ai-chat-open'), panel=document.getElementById('ai-chat-panel'), close=document.getElementById('ai-chat-close'), form=document.getElementById('ai-chat-form'), input=document.getElementById('ai-chat-input'), log=document.getElementById('ai-chat-messages'), send=form.querySelector('button');
+ const history=[];
+ function toggle(on){panel.classList.toggle('open',on);panel.setAttribute('aria-hidden',String(!on));open.setAttribute('aria-expanded',String(on));if(on)input.focus();}
+ open.addEventListener('click',()=>toggle(!panel.classList.contains('open')));close.addEventListener('click',()=>toggle(false));
+ function bubble(value,mine=false){const el=document.createElement('div');el.className='ai-bubble'+(mine?' mine':'');el.textContent=value;log.appendChild(el);log.scrollTop=log.scrollHeight;return el;}
+ form.addEventListener('submit',async e=>{
+  e.preventDefault();const question=input.value.trim();if(!question || send.disabled)return;
+  input.value='';bubble(question,true);history.push({role:'user',content:question});send.disabled=true;const waiting=bubble('Thinking…');
+  try{const match=location.hash.match(/^#\/p\/([a-z]+)$/);const sku=match?match[1]:null;
+   const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sku,messages:history.slice(-15)})});
+   const data=await r.json();if(!r.ok)throw new Error(data.error||'Unable to answer right now.');
+   waiting.textContent=data.reply;history.push({role:'assistant',content:data.reply});
+  }catch(err){waiting.textContent=err.message||'Something went wrong. Please try again.';history.pop();}
+  finally{send.disabled=false;input.focus();}
+ });
+})();
 </script>
 </body>
 </html>
