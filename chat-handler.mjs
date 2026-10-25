@@ -1,3 +1,4 @@
+import {catalog, recommend} from './recommendations.mjs';
 // Server-side only. Never import this module in browser code.
 const PRODUCTS = {
   overshirt: 'Linen overshirt', knit: 'Knit sweater', trouser: 'Trousers',
@@ -14,7 +15,9 @@ export async function handleChat(body) {
   if (messages.at(-1).role !== 'user') throw error(400, 'Last message must be from the customer.');
   const sku = typeof body.sku === 'string' && Object.hasOwn(PRODUCTS, body.sku) ? body.sku : null;
   const product = sku ? PRODUCTS[sku] : 'No specific product selected';
-  const instructions = `You are the friendly, concise shopping assistant for Maren & Co, a fictional demo storefront. The customer is currently viewing: ${product}. Products in this demo include: ${Object.values(PRODUCTS).join(', ')}. Help with product questions, choosing items, and fit. Do not invent product specifications, materials, sizes, measurements, shipping terms, stock, or policies. If exact details are not provided in the customer's question, acknowledge uncertainty and suggest checking the product page. Do not claim to have live inventory or order access. Keep replies brief (2-5 sentences). Do not request personal or payment details.`;
+  const recommendations = recommend(messages.at(-1).content);
+  const catalogText = catalog.map(p=>`${p.sku}: ${p.name}, $${p.price}. ${p.description}`).join('\n');
+  const instructions = `Verified demo catalog (only use these prices and descriptions):\n${catalogText}\nRecommended matching products for latest question: ${recommendations.map(p=>p.sku).join(', ') || 'none'}. Do not claim an item meets the requested budget unless its listed price does. You are the friendly, concise shopping assistant for Maren & Co, a fictional demo storefront. The customer is currently viewing: ${product}. Products in this demo include: ${Object.values(PRODUCTS).join(', ')}. Help with product questions, choosing items, and fit. Do not invent product specifications, materials, sizes, measurements, shipping terms, stock, or policies. If exact details are not provided in the customer's question, acknowledge uncertainty and suggest checking the product page. Do not claim to have live inventory or order access. Keep replies brief (2-5 sentences). Do not request personal or payment details.`;
   const response = await fetch('https://api.openai.com/v1/responses', {
     method:'POST', headers:{'Content-Type':'application/json', Authorization:`Bearer ${process.env.OPENAI_API_KEY}`},
     body:JSON.stringify({model:process.env.OPENAI_MODEL || 'gpt-4.1-mini', instructions, input:messages, max_output_tokens:280}),
@@ -24,5 +27,5 @@ export async function handleChat(body) {
   const data = await response.json();
   const reply = (data.output || []).flatMap(o=>o.content || []).filter(c=>c.type==='output_text').map(c=>c.text).join('\n').trim();
   if (!reply) throw error(502,'AI returned an empty answer. Please try again.');
-  return {reply};
+  return {reply, recommendations};
 }

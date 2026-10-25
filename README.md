@@ -45,3 +45,12 @@ Local setup: copy `.env.example` to `.env.local`, replace the placeholder with y
 Vercel: set `OPENAI_API_KEY` in Project Settings → Environment Variables (Production and Preview as appropriate), optionally `OPENAI_MODEL`, and redeploy. Deploy the entire project including the root `api/` directory, `chat-handler.mjs`, and `public/` directory. Do not put `.env.local` or any secret in `public/`.
 
 The AI answers general product questions, but the catalog is fictional and the model cannot verify live stock, exact sizing, or shipping policies. API usage incurs charges.
+
+## Hackathon deeper demo: intent to clickable catalog recommendations
+1. Open **Preview storefront** (Maren & Co), then click **Ask AI about products**.
+2. Click **Summer trip under $100**, or type `I need breathable stylish clothes for a summer vacation under $100`.
+3. With `OPENAI_API_KEY` configured, the assistant returns a conversational answer plus **Shop matching products** cards. Cards are selected from the actual Maren & Co demo catalog, constrained to the stated budget, with prices and links to product detail pages.
+4. Click **Linen overshirt · $89** to open its product detail page. Ask a follow-up about sizing or materials.
+5. Return to **Live Storefront** in Brand Management to show the original Forma manager experience. Forma and Maren & Co are separate demo experiences; changes are not synchronized.
+
+This is the initial wedge: catalog-grounded conversational discovery and clickable product recommendations. It is not a live Shopify integration, checkout, or proven conversion improvement. Recommendations use deterministic keyword/budget matching over the demo catalog, while OpenAI generates the conversational explanation. No API key is sent to the browser.
