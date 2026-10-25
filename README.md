@@ -54,3 +54,13 @@ The AI answers general product questions, but the catalog is fictional and the m
 5. Return to **Live Storefront** in Brand Management to show the original Forma manager experience. Forma and Maren & Co are separate demo experiences; changes are not synchronized.
 
 This is the initial wedge: catalog-grounded conversational discovery and clickable product recommendations. It is not a live Shopify integration, checkout, or proven conversion improvement. Recommendations use deterministic keyword/budget matching over the demo catalog, while OpenAI generates the conversational explanation. No API key is sent to the browser.
+
+## Commerce workflow (expanded prototype)
+
+Open `/maren-store.html` to shop and `/commerce-admin.html` to manage the demo store. A shortcut to Commerce Operations appears on the Intent dashboard.
+
+**Customer journey:** browse collections and product details, add products to a persistent bag, adjust quantities, save items to a wishlist, apply `WELCOME10`, see subtotal/discount/shipping/estimated tax, enter guest delivery information, and place a **simulated** order. The order appears in browser-local order history. The AI shopping assistant and catalog-grounded recommendations remain available.
+
+**Merchant journey:** review demo sales KPIs, view orders and update fulfillment status, change SKU inventory, create/enable/disable promo codes, configure shipping threshold/fee and announcement banner, and export a CSV activity log. Changes to stock, promos, orders, and settings are shared with the storefront **when opened in the same browser on the same origin**.
+
+**Important boundaries:** This is an interactive hackathon prototype, **not a production commerce system**. It does not accept real payments, send transactional emails, create secure customer accounts, authenticate merchants, provide real shipping labels or carrier rates, or persist data in a server-side database. Checkout does not collect card data. Customer address and email are stored in browser localStorage for demonstration; use fictional test details only. Sales metrics are demo-only. Production requires a database, authenticated roles, secure payment provider checkout, server-side inventory and pricing validation, and order fulfillment integrations.

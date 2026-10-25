@@ -5,7 +5,7 @@ if (existsSync('.env.local')) process.loadEnvFile('.env.local');
 import { readFile } from 'node:fs/promises';
 import { resolve, extname, sep } from 'node:path';
 const root = process.cwd();
-const types = { '.html': 'text/html', '.css': 'text/css', '.mjs': 'text/javascript', '.js': 'text/javascript', '.svg': 'image/svg+xml' };
+const types = { '.html': 'text/html', '.css': 'text/css', '.mjs': 'text/javascript', '.js': 'text/javascript', '.svg': 'image/svg+xml', '.png': 'image/png' };
 const server = http.createServer(async (req, res) => {
   try {
     const url = new URL(req.url, 'http://localhost');
@@ -18,7 +18,7 @@ const server = http.createServer(async (req, res) => {
       return;
     }
     const file = resolve(root, '.' + decodeURIComponent(url.pathname === '/' ? '/index.html' : url.pathname));
-    if (!file.startsWith(root + sep) || !['.html', '.css', '.mjs', '.js', '.svg'].includes(extname(file))) { res.writeHead(404); res.end('Not found'); return; }
+    if (!file.startsWith(root + sep) || !['.html', '.css', '.mjs', '.js', '.svg', '.png'].includes(extname(file))) { res.writeHead(404); res.end('Not found'); return; }
     const data = await readFile(file);
     res.writeHead(200, { 'Content-Type': types[extname(file)] + '; charset=utf-8', 'Cache-Control': 'no-cache' }); res.end(data);
   } catch { res.writeHead(404); res.end('Not found'); }
